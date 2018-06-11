@@ -11,13 +11,14 @@ defmodule BookListWeb.BookView do
   end
 
   def render("book.json", %{book: book}) do
-    %{id: book.id,
+    %{
       title: book.title,
+      subtitle: book.subtitle,
       author: book.author,
       notes: book.notes,
       pages: book.pages,
       pages_read: book.pages_read,
-      rating: book.rating,
-      public: book.public}
+      rating: book.rating
+    }
   end
 end

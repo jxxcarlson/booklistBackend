@@ -7,7 +7,7 @@ defmodule BookListWeb.Router do
 
   resources "/api/users", BookListWeb.UserController #, except: [:new, :edit]
   post "/api/users/authenticate", BookListWeb.UserController, :authenticate
-  
+
   resources "/api/books", BookListWeb.BookController
   
 

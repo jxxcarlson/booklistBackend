@@ -6,7 +6,9 @@ defmodule BookListWeb.BookController do
 
   action_fallback BookListWeb.FallbackController
 
-  def index(conn, _params) do
+  def index(conn, params) do
+    IO.puts "query string = #{conn.query_string}"
+    IO.inspect params
     books = BookSpace.list_books()
     render(conn, "index.json", books: books)
   end

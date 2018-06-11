@@ -14,7 +14,8 @@ defmodule BookListWeb.UserController do
         {:ok, _} <- Authentication.checkpw2(password, user.password_hash),
         {:ok, token} <- Token.get(user.id, user.email, 86400*30 )
       do
-         render(conn, "authenticated.json", username: user.username, token: token)
+         render(conn, "authenticated.json", username: user.username, 
+           email: user.email, firstname: user.firstname, token: token)
       else
          _ -> render(conn, "error.json", error: "Not authenticated")
       end

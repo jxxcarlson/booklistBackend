@@ -39,7 +39,7 @@ defmodule BookList.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:corsica, "~> 0.5"},
+      {:corsica, "~> 1.0"},
       {:joken, "~> 1.5.0"},
       {:comeonin, "~> 2.0"},
       {:bamboo, "~> 0.8"},
