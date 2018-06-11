@@ -15,4 +15,23 @@ defmodule BookListWeb.UserView do
       username: user.username,
       email: user.email}
   end
+
+  ###
+
+  def render("authenticated.json",  %{username: username, token: token}) do
+    %{
+      username: username,
+      token: token
+    }
+  end
+
+  def render("error.json", %{error: message}) do
+    %{ error: message }
+  end
+
+  def render("success.json", %{message: message}) do
+    %{ message: message }
+  end
+
+
 end

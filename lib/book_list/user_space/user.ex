@@ -56,5 +56,30 @@ defmodule BookList.UserSpace.User do
     end
   end
 
+  #  def get_user_id_by_email(email) do
+  #    query = from(
+  #        user in User,
+  #        where: user.email == ^email,
+  #        select: user.id
+  #   )
+  #    Repo.one(query )
+  # end
+
+  # def get_user_by_email(email) do
+  #    id = get_user_id_by_email(email)
+  #    if id == nil do
+  #      {:error, "Could not find voter by email"}
+  #    else
+  #      {:ok, Repo.get(User, id  )}
+  #    end
+  # end
+
+  def verified_user(user, token) do
+    %{user: %{token: token,
+      firstName: user.first_name, lastName: user.last_name, 
+      email: user.email}
+    }
+  end
+
 end
 

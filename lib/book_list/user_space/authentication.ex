@@ -190,15 +190,17 @@ defmodule BookList.UserSpace.Authentication do
   defp get_user(email) do
     user =  Repo.get_by(User, email: email)
     case user do
-     nil -> {:error, "User not found"}
-     _ -> {:ok, user}
+     nil -> {:error, "User not found"}; IO.puts "USER NOT FOUND"
+     _ -> {:ok, user}; IO.puts "GO USER"
     end
   end
 
   def checkpw2(password, password_hash) do
     if  checkpw(password, password_hash) == true do
+      IO.puts "Password OK"
       {:ok, true}
     else
+      IO.puts "Password INVALID"
       {:error, "Incorrect password or email"}
     end
   end
