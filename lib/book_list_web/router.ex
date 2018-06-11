@@ -5,8 +5,8 @@ defmodule BookListWeb.Router do
     plug :accepts, ["json"]
   end
 
-  resources "/users", UserController #, except: [:new, :edit]
-  resources "/books", BookController
+  resources "/api/users", BookListWeb.UserController #, except: [:new, :edit]
+  resources "/api/books", BookListWeb.BookController
 
   scope "/api", BookListWeb do
     pipe_through :api

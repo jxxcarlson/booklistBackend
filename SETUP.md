@@ -20,6 +20,10 @@ $ mix phx.gen.json BookSpace Book books title:string author:string notes:text pa
 ## MIGRATE
 $ mix ecto.migrate
 
+## ROUTES
+resources "/users", UserController #, except: [:new, :edit]
+resources "/books", BookController
+
 ## START APP
 $ iex -S mix phx.server
 

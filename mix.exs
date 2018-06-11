@@ -20,7 +20,7 @@ defmodule BookList.Mixfile do
   def application do
     [
       mod: {BookList.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:bamboo, :corsica, :logger, :runtime_tools]
     ]
   end
 
@@ -38,7 +38,13 @@ defmodule BookList.Mixfile do
       {:phoenix_ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:corsica, "~> 0.5"},
+      {:joken, "~> 1.5.0"},
+      {:comeonin, "~> 2.0"},
+      {:bamboo, "~> 0.8"},
+      {:secure_random, "~> 0.5"},
+      {:poison, "~> 3.1"}
     ]
   end
 
