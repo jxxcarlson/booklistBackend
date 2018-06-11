@@ -3,13 +3,18 @@ defmodule BookListWeb.BookController do
 
   alias BookList.BookSpace
   alias BookList.BookSpace.Book
+  alias BookList.BookSpace.Query
 
   action_fallback BookListWeb.FallbackController
 
   def index(conn, params) do
-    IO.puts "query string = #{conn.query_string}"
-    IO.inspect params
-    books = BookSpace.list_books()
+     userid = params["userid"] || ""
+     books = if userid == "" do 
+       BookList.BookSpace.list_books() 
+    else 
+       Query.get_by_user_id userid 
+    end 
+    IO.puts "NUMBER OF BOOKS = #{length(books)}"
     render(conn, "index.json", books: books)
   end
 

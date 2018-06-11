@@ -17,7 +17,7 @@ defmodule BookListWeb.BookView do
       author: book.author,
       notes: book.notes,
       pages: book.pages,
-      pages_read: book.pages_read,
+      pagesRead: book.pages_read,
       rating: book.rating
     }
   end
