@@ -76,7 +76,7 @@ defmodule BookList.UserSpace.User do
 
   def verified_user(user, token) do
     %{user: %{token: token,
-      firstName: user.first_name, lastName: user.last_name, 
+      firstName: user.firstname, lastName: user.lastname, 
       email: user.email}
     }
   end
