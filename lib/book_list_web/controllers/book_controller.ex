@@ -14,7 +14,6 @@ defmodule BookListWeb.BookController do
     else 
        Query.get_by_user_id userid 
     end 
-    IO.puts "NUMBER OF BOOKS = #{length(books)}"
     render(conn, "index.json", books: books)
   end
 
