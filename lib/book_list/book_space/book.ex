@@ -20,7 +20,7 @@ defmodule BookList.BookSpace.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:title, :subtitle, :author, :notes, :pages, :pages_read, :rating, :public])
+    |> cast(attrs, [:user_id, :title, :subtitle, :author, :notes, :pages, :pages_read, :rating, :public])
     |> validate_required([:title, :author, :pages, :pages_read, :rating, :public])
   end
 end

@@ -28,6 +28,11 @@ defmodule BookList.BookSpace.Query do
         order_by: [asc: b.username]
   end
 
+  def sort_by_last_modified(query) do
+      from b in query,
+        order_by: [desc: b.updated_at]
+  end
+
     def sort_by_title(query) do
       from b in query,
         order_by: [asc: b.title]
@@ -39,7 +44,7 @@ defmodule BookList.BookSpace.Query do
 
 
   def get_by_user_id(user_id) do
-    Book |> by_user_id(user_id) |> sort_by_title |> Repo.all
+    Book |> by_user_id(user_id) |> sort_by_last_modified |> Repo.all
   end
 
   def get(id) do
