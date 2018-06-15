@@ -27,7 +27,7 @@ defmodule BookList.UserSpace.User do
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:firstname, :lastname, :username, :email, :password, :password_hash])
-    |> validate_required([:firstname, :lastname, :username, :email])
+    |> validate_required([:firstname, :username, :email])
   end
 
   def registration_changeset(%User{} = user, params \\ :empty) do
