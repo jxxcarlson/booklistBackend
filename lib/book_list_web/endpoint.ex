@@ -18,7 +18,7 @@ defmodule BookListWeb.Endpoint do
   end
   
   plug Corsica,
-    origins: "http://localhost:8080",
+    origins: ["http://localhost:8080","http://206.189.184.194", "http://booklib.io/", "https://booklib.io/"],
     log: [rejected: :error, invalid: :warn, accepted: :debug],
     allow_headers: ["content-type", "accept", "authorization"]
 

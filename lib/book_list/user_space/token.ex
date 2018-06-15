@@ -14,11 +14,11 @@ defmodule BookList.UserSpace.Token do
     """
     def get(user_id, username, seconds_from_now \\ -1) do
       t = if (seconds_from_now < 0) do
-        System.get_env("VBUDDY_EXPIRATION") |> String.to_integer
+        System.get_env("BOOKKLIB_EXPIRATION") |> String.to_integer
       else
         seconds_from_now
       end
-      secret = System.get_env("VBUDDY_SECRET")
+      secret = System.get_env("BOOKLIB_SECRET")
       cond do
         user_id == nil -> {:error, 400}
         username == nil -> {:error, 400}
@@ -40,7 +40,7 @@ defmodule BookList.UserSpace.Token do
     end
 
     def validate(tok, user_id) do
-      secret = System.get_env("VBUDDY_SECRET")
+      secret = System.get_env("BOOKLIB_SECRET")
       tok
       |> token
       |> with_validation("user_id", &(&1 == user_id))
@@ -49,7 +49,7 @@ defmodule BookList.UserSpace.Token do
     end
 
     def validate(tok) do
-      secret = System.get_env("VBUDDY_SECRET")
+      secret = System.get_env("BOOKLIB_SECRET")
       tok
       |> token
       |> with_signer(hs256(secret))
