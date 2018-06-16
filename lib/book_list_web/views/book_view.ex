@@ -19,7 +19,8 @@ defmodule BookListWeb.BookView do
       notes: book.notes,
       pages: book.pages,
       pagesRead: book.pages_read,
-      rating: book.rating
+      rating: book.rating,
+      public: book.public
     }
   end
 end
