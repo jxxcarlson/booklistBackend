@@ -8,6 +8,18 @@ defmodule BookListWeb.BookController do
   action_fallback BookListWeb.FallbackController
 
   def index(conn, params) do
+     IO.inspect params
+     books = cond do 
+        (params["userid"] || "") != "" -> Query.get_by_user_id params["userid"]
+        (params["shared"] || "") != "" -> Query.get_public_by_user_name params["shared"]
+        (params["test"] || "") != "xyz111" -> QBookList.BookSpace.list_books() 
+        true -> []
+     end
+    render(conn, "index.json", books: books)
+  end
+
+    def index1(conn, params) do
+     IO.inspect params
      userid = params["userid"] || ""
      books = if userid == "" do 
        BookList.BookSpace.list_books() 

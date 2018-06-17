@@ -17,6 +17,11 @@ defmodule BookList.BookSpace.Query do
       where: b.id == ^id
   end
 
+  def is_public(query) do
+    from b in query,
+      where: b.public == ^true
+  end
+
   def by_user_id(query, user_id) do
     from b in query,
       where: b.user_id == ^user_id
@@ -46,6 +51,19 @@ defmodule BookList.BookSpace.Query do
   def get_by_user_id(user_id) do
     Book |> by_user_id(user_id) |> sort_by_last_modified |> Repo.all
   end
+
+  def get_public_by_user_name(username) do 
+    user =  BookList.UserSpace.Query.get_by_username(username)
+    if user == nil do 
+      [] 
+    else 
+      Book 
+        |> by_user_id(user.id) 
+        |> is_public
+        |> sort_by_last_modified 
+        |> Repo.all
+    end 
+  end 
 
   def get(id) do
     Book |> by_id(id) |> Repo.one
