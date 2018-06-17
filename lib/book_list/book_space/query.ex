@@ -65,6 +65,19 @@ defmodule BookList.BookSpace.Query do
     end 
   end 
 
+  def get_public_by_email(email) do 
+    user =  BookList.UserSpace.Query.get_by_email(email)
+    if user == nil do 
+      [] 
+    else 
+      Book 
+        |> by_user_id(user.id) 
+        |> is_public
+        |> sort_by_last_modified 
+        |> Repo.all
+    end 
+  end 
+
   def get(id) do
     Book |> by_id(id) |> Repo.one
   end
