@@ -20,7 +20,8 @@ defmodule BookListWeb.BookView do
       pages: book.pages,
       pagesRead: book.pages_read,
       rating: book.rating,
-      public: book.public
+      public: book.public,
+      category: book.category || ""
     }
   end
 end

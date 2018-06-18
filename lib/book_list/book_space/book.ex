@@ -6,6 +6,7 @@ defmodule BookList.BookSpace.Book do
   schema "books" do
     field :author, :string
     field :notes, :string, default: "Just started."
+    field :category, :string, default: ""
     field :pages, :integer, default: 10
     field :pages_read, :integer, default: 0
     field :public, :boolean, default: false
@@ -14,13 +15,14 @@ defmodule BookList.BookSpace.Book do
     field :subtitle, :string, default: ""
     field :user_id, :id
 
+
     timestamps()
   end
 
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:user_id, :title, :subtitle, :author, :notes, :pages, :pages_read, :rating, :public])
+    |> cast(attrs, [:user_id, :title, :subtitle, :author, :notes, :pages, :pages_read, :rating, :public, :category])
     |> validate_required([:title, :author, :pages, :pages_read, :rating, :public])
   end
 end
