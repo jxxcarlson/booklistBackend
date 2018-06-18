@@ -8,11 +8,12 @@ defmodule BookList.UserSpace.User do
   schema "users" do
     field :email, :string
     field :username, :string
-    field :firstname, :string
-    field :lastname, :string 
+    field :firstname, :string, default: "Undisclosed"
+    field :lastname, :string, default: "Undisclosed"
     field :password_hash, :string
     field :password, :string, virtual: true
     field :admin, :boolean, default: false
+    field :blurb, :string, default: ""
 
     timestamps()
   end
@@ -26,7 +27,7 @@ defmodule BookList.UserSpace.User do
 
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:firstname, :lastname, :username, :email, :password, :password_hash])
+    |> cast(attrs, [:firstname, :lastname, :username, :blurb, :email, :password, :password_hash])
     |> validate_required([:firstname, :username, :email])
   end
 
