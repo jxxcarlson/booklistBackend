@@ -38,5 +38,9 @@ defmodule BookListWeb.UserView do
     %{ message: message }
   end
 
+  def render("reply.json", %{message: message}) do
+    %{ message: message }
+  end
+
 
 end

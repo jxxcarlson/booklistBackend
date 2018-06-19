@@ -5,7 +5,7 @@ defmodule BookListWeb.UserController do
   alias BookList.UserSpace.User
   alias BookList.UserSpace.Query
   alias BookList.UserSpace.Authentication
-  alias BookList.UserSpace.Token 
+  alias BookList.UserSpace.Token
 
   action_fallback BookListWeb.FallbackController
 
@@ -43,7 +43,7 @@ defmodule BookListWeb.UserController do
     user = UserSpace.get_user!(id)
 
     with {:ok, %User{} = user} <- UserSpace.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+      render(conn, "reply.json", message: "User updated")
     end
   end
 
