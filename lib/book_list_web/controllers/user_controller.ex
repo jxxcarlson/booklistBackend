@@ -34,6 +34,17 @@ defmodule BookListWeb.UserController do
     end
   end
 
+  def blurb(conn, %{"username" => username}) do
+    user = BookList.UserSpace.Query.get_by_username(username)
+    if user != nil do
+      IO.puts "blurb, user = #{user.firstname}"
+      render(conn, "blurb.json", blurb: user.blurb)
+    else
+      IO.puts "ERROR (DT)"
+      render(conn, "error.json", error: "user not found")
+    end
+  end
+
   def show(conn, %{"id" => id}) do
     user = UserSpace.get_user!(id)
     render(conn, "show.json", user: user)
