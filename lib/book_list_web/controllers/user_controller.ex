@@ -20,9 +20,17 @@ defmodule BookListWeb.UserController do
       end
   end
 
-  def index(conn, _params) do
+  def index1(conn, _params) do
     users = UserSpace.list_users()
     render(conn, "index.json", users: users)
+  end
+
+  def index(conn, params) do
+    if params["public"] == "YadaBada" do
+        render(conn, "index.json", users: UserSpace.list_users())
+    else
+        render(conn, "public_index.json", users: UserSpace.list_public_users())
+    end
   end
 
   def create(conn, %{"user" => user_params}) do

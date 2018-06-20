@@ -52,31 +52,34 @@ defmodule BookList.BookSpace.Query do
     Book |> by_user_id(user_id) |> sort_by_last_modified |> Repo.all
   end
 
-  def get_public_by_user_name(username) do 
-    user =  BookList.UserSpace.Query.get_by_username(username)
-    if user == nil do 
-      [] 
-    else 
-      Book 
-        |> by_user_id(user.id) 
+  def get_public_by_user_name(username) do
+    user =  BookList.UserSpace.Query.get_by_username(username) |> IO.inspect(label: "(1)")
+    if user == nil do
+      []
+    else
+      Book
+        |> by_user_id(user.id)
+        |> IO.inspect(lable: "(2)")
         |> is_public
-        |> sort_by_last_modified 
+        |> IO.inspect(lable: "(3)")
+        |> sort_by_last_modified
+        |> IO.inspect(lable: "(4)")
         |> Repo.all
-    end 
-  end 
+    end
+  end
 
-  def get_public_by_email(email) do 
+  def get_public_by_email(email) do
     user =  BookList.UserSpace.Query.get_by_email(email)
-    if user == nil do 
-      [] 
-    else 
-      Book 
-        |> by_user_id(user.id) 
+    if user == nil do
+      []
+    else
+      Book
+        |> by_user_id(user.id)
         |> is_public
-        |> sort_by_last_modified 
+        |> sort_by_last_modified
         |> Repo.all
-    end 
-  end 
+    end
+  end
 
   def get(id) do
     Book |> by_id(id) |> Repo.one

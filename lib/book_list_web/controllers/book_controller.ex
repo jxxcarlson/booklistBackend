@@ -9,31 +9,30 @@ defmodule BookListWeb.BookController do
 
   def index(conn, params) do
      IO.inspect params
-     books = cond do 
+     books = cond do
         (params["userid"] || "") != "" -> Query.get_by_user_id params["userid"]
         (params["shared"] || "") != "" -> get_shared_books(params["shared"])
-        (params["test"] || "") != "xyz111" -> QBookList.BookSpace.list_books() 
         true -> []
      end
     render(conn, "index.json", books: books)
   end
 
-  def get_shared_books(key) do 
-    if String.contains? key, "@" do 
-      Query.get_public_by_email key 
-    else 
+  def get_shared_books(key) do
+    if String.contains? key, "@" do
+      Query.get_public_by_email key
+    else
       Query.get_public_by_user_name key 
     end
-  end 
+  end
 
     def index1(conn, params) do
      IO.inspect params
      userid = params["userid"] || ""
-     books = if userid == "" do 
-       BookList.BookSpace.list_books() 
-    else 
-       Query.get_by_user_id userid 
-    end 
+     books = if userid == "" do
+       BookList.BookSpace.list_books()
+    else
+       Query.get_by_user_id userid
+    end
     render(conn, "index.json", books: books)
   end
 

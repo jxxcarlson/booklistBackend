@@ -7,6 +7,7 @@ defmodule BookList.UserSpace do
   alias BookList.Repo
 
   alias BookList.UserSpace.User
+  alias BookList.UserSpace.Query
 
   @doc """
   Returns the list of users.
@@ -19,6 +20,10 @@ defmodule BookList.UserSpace do
   """
   def list_users do
     Repo.all(User)
+  end
+
+  def list_public_users do
+    User |> Query.is_public |> Query.sort_by_username |> Repo.all
   end
 
   @doc """
@@ -103,5 +108,5 @@ defmodule BookList.UserSpace do
     User.changeset(user, %{})
   end
 
- 
+
 end

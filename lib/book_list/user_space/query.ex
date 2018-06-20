@@ -16,6 +16,11 @@ defmodule BookList.UserSpace.Query do
       where: u.id == ^id
   end
 
+  def is_public(query) do
+    from u in query,
+      where: u.public == ^true
+  end
+
   def by_email(query, email) do
     from u in query,
       where: u.email == ^email

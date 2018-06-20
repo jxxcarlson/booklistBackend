@@ -14,6 +14,7 @@ defmodule BookList.UserSpace.User do
     field :password, :string, virtual: true
     field :admin, :boolean, default: false
     field :blurb, :string, default: ""
+    field :public, :boolean, default: false
 
     timestamps()
   end
@@ -27,7 +28,7 @@ defmodule BookList.UserSpace.User do
 
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:firstname, :lastname, :username, :blurb, :email, :password, :password_hash])
+    |> cast(attrs, [:firstname, :lastname, :username, :public, :blurb, :email, :password, :password_hash])
     |> validate_required([:firstname, :username, :email])
   end
 
@@ -77,10 +78,9 @@ defmodule BookList.UserSpace.User do
 
   def verified_user(user, token) do
     %{user: %{token: token,
-      firstName: user.firstname, lastName: user.lastname, 
+      firstName: user.firstname, lastName: user.lastname,
       email: user.email}
     }
   end
 
 end
-

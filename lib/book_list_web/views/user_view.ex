@@ -6,6 +6,10 @@ defmodule BookListWeb.UserView do
     %{data: render_many(users, UserView, "user.json")}
   end
 
+  def render("public_index.json", %{users: users}) do
+    %{data: render_many(users, UserView, "public_user.json")}
+  end
+
   def render("show.json", %{user: user}) do
     %{data: render_one(user, UserView, "user.json")}
   end
@@ -14,7 +18,13 @@ defmodule BookListWeb.UserView do
     %{id: user.id,
       username: user.username,
       firstname: user.firstname,
-      email: user.email}
+      email: user.email,
+      public: user.public || false
+    }
+  end
+
+  def render("public_user.json", %{user: user}) do
+    %{ username: user.username}
   end
 
   ###
@@ -26,7 +36,8 @@ defmodule BookListWeb.UserView do
       email: user.email,
       firstname: user.firstname,
       token: token,
-      blurb: user.blurb || ""
+      blurb: user.blurb || "",
+      public: user.public || false
     }
   end
 
