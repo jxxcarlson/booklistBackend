@@ -15,14 +15,14 @@ defmodule BookList.UserSpace.Authentication do
 
   """
 
-  
-  import Ecto.Query, warn: false  
+
+  import Ecto.Query, warn: false
   import Comeonin.Bcrypt, only: [checkpw: 2]
   import Ecto.Changeset
 
   alias BookList.UserSpace.User
   alias BookList.UserSpace.Query
-   alias BookList.UserSpace.Randomizer
+  alias BookList.UserSpace.Randomizer
   alias BookList.UserSpace.Token
   alias BookList.Repo
 

@@ -59,11 +59,11 @@ defmodule BookList.BookSpace.Query do
     else
       Book
         |> by_user_id(user.id)
-        |> IO.inspect(lable: "(2)")
+        |> IO.inspect(label: "(2)")
         |> is_public
-        |> IO.inspect(lable: "(3)")
+        |> IO.inspect(label: "(3)")
         |> sort_by_last_modified
-        |> IO.inspect(lable: "(4)")
+        |> IO.inspect(label: "(4)")
         |> Repo.all
     end
   end

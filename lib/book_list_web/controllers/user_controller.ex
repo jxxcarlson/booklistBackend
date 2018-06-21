@@ -20,11 +20,6 @@ defmodule BookListWeb.UserController do
       end
   end
 
-  def index1(conn, _params) do
-    users = UserSpace.list_users()
-    render(conn, "index.json", users: users)
-  end
-
   def index(conn, params) do
     if params["public"] == "YadaBada" do
         render(conn, "index.json", users: UserSpace.list_users())
@@ -38,16 +33,13 @@ defmodule BookListWeb.UserController do
     with {:ok, username} <- Query.username_is_available(user_params["username"]),
          {:ok, email} <- Query.email_is_available(user_params["email"]),
          {:ok, %User{} = user} <- UserSpace.create_user(user_params) do
-              IO.puts "user id = #{user.id}"
-              IO.puts "username = #{user.username}"
               {:ok, token} = Token.get(user.id, user.username)
-              IO.puts "token = #{token}"
               conn
               |> put_status(:created)
               |> put_resp_header("location", user_path(conn, :show, user))
               |> render("user.json", %{user: user, token: token})
     else
-      err -> render("reply.json", message: "Error: duplicate email or username")
+      err -> render(conn, "reply.json", message: "Error: duplicate email or username")
     end
   end
 
@@ -69,16 +61,23 @@ defmodule BookListWeb.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = UserSpace.get_user!(id)
-
-    with {:ok, %User{} = user} <- UserSpace.update_user(user, user_params) do
-      render(conn, "reply.json", message: "User updated")
+    with {:ok, result} <- Token.authenticated_from_header(conn),
+       {:ok, %User{} = user} <- UserSpace.update_user(user, user_params) do
+       render(conn, "reply.json", message: "User updated")
+    else
+       err -> render(conn, "reply.json", message: "Error: not authorized")
     end
   end
 
   def delete(conn, %{"id" => id}) do
     user = UserSpace.get_user!(id)
-    with {:ok, %User{}} <- UserSpace.delete_user(user) do
+    with {:ok, result} <- Token.authenticated_from_header(conn),
+      {:ok, %User{}} <- UserSpace.delete_user(user) do
       send_resp(conn, :no_content, "")
+    else
+      err -> render(conn, "reply.json", message: "Error: not authorized")
     end
   end
+
+
 end
