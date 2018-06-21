@@ -14,7 +14,7 @@ defmodule BookList.UserSpace.Token do
     """
     def get(user_id, username, seconds_from_now \\ -1) do
       t = if (seconds_from_now < 0) do
-        System.get_env("BOOKKLIB_EXPIRATION") |> String.to_integer
+        System.get_env("BOOKLIB_EXPIRATION") |> String.to_integer
       else
         seconds_from_now
       end

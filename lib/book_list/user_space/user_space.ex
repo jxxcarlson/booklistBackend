@@ -55,6 +55,7 @@ defmodule BookList.UserSpace do
 
   """
   def create_user(attrs \\ %{}) do
+    # attrs |> IO.inspect(label: "CREATE USER")
     %User{}
     # |> User.changeset(attrs)
     |> User.registration_changeset(attrs)

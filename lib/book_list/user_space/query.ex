@@ -41,6 +41,24 @@ defmodule BookList.UserSpace.Query do
     User |> by_username(username) |> Repo.one
   end
 
+  def username_is_available(username) do
+    users = User |> by_username(username) |> Repo.all
+    if users == [] do
+      {:ok, username}
+    else
+      {:error, username}
+    end
+  end
+
+  def email_is_available(email) do
+    users = User |> by_email(email) |> Repo.all
+    if users == [] do
+      {:ok, email}
+    else
+      {:error, email}
+    end
+  end
+
   def get(id) do
     User |> by_id(id) |> Repo.one
   end

@@ -34,11 +34,20 @@ defmodule BookListWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- UserSpace.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", user_path(conn, :show, user))
-      |> render("show.json", user: user)
+    user_params |> IO.inspect(label: "user_params")
+    with {:ok, username} <- Query.username_is_available(user_params["username"]),
+         {:ok, email} <- Query.email_is_available(user_params["email"]),
+         {:ok, %User{} = user} <- UserSpace.create_user(user_params) do
+              IO.puts "user id = #{user.id}"
+              IO.puts "username = #{user.username}"
+              {:ok, token} = Token.get(user.id, user.username)
+              IO.puts "token = #{token}"
+              conn
+              |> put_status(:created)
+              |> put_resp_header("location", user_path(conn, :show, user))
+              |> render("user.json", %{user: user, token: token})
+    else
+      err -> render("reply.json", message: "Error: duplicate email or username")
     end
   end
 
