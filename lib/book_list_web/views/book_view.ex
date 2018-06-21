@@ -24,4 +24,9 @@ defmodule BookListWeb.BookView do
       category: book.category || ""
     }
   end
+
+  def render("reply.json", %{message: message}) do
+    %{ message: message }
+  end
+  
 end
