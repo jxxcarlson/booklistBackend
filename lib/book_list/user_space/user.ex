@@ -26,7 +26,7 @@ defmodule BookList.UserSpace.User do
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:firstname, :lastname, :username, :public,
-      :blurb, :email, :password, :password_hash, :follow])
+      :blurb, :email, :password, :password_hash, :admin, :follow])
     |> validate_required([:firstname, :username, :email])
   end
 
