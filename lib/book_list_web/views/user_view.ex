@@ -3,7 +3,7 @@ defmodule BookListWeb.UserView do
   alias BookListWeb.UserView
 
   def render("index.json", %{users: users}) do
-    %{data: render_many(users, UserView, "public_user.json")}
+    %{data: render_many(users, UserView, "user_short.json")}
   end
 
   def render("public_index.json", %{users: users}) do
@@ -28,6 +28,10 @@ defmodule BookListWeb.UserView do
 
   def render("public_user.json", %{user: user}) do
     %{ username: user.username}
+  end
+
+  def render("user_short.json", %{user: user}) do
+    %{ username: user.username, follow: user.follow}
   end
 
   ###
