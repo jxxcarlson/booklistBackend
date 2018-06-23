@@ -109,5 +109,15 @@ defmodule BookList.UserSpace do
     User.changeset(user, %{})
   end
 
+  def add_follower(username, follower_name) do
+    with {:ok, user} <- Query.get_by_username(username),
+      {:ok, follower} <- Query.get_by_username(follower_name)
+    do
+      followers = (user.follow || [ ]) ++ [follower_name]
+      cs = User.changeset(user, %{follow: followers})
+      Repo.update(cs)
+    end
+  end
+
 
 end

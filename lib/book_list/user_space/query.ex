@@ -34,11 +34,21 @@ defmodule BookList.UserSpace.Query do
   ## GET USER
 
   def get_by_email(email) do
-    User |> by_email(email) |> Repo.one
+    users = User |> by_email(email) |> Repo.all
+    cond do
+      users == [] -> {:error, "#{email} not found"}
+      length(users) == 1 -> {:ok, hd users}
+      true -> {:error, "multiple matches for #{email}"}
+    end
   end
 
   def get_by_username(username) do
-    User |> by_username(username) |> Repo.one
+    users = User |> by_username(username) |> Repo.all
+    cond do
+      users == [] -> {:error, "#{username} not found"}
+      length(users) == 1 -> {:ok, hd users}
+      true -> {:error, "multiple matches for #{username}"}
+    end
   end
 
   def username_is_available(username) do

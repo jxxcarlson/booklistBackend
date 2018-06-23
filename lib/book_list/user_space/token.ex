@@ -140,6 +140,7 @@ defmodule BookList.UserSpace.Token do
 
     def authenticated_from_header(conn) do
       IO.puts "AUTH CONN"
+      token_from_header(conn) |> IO.inspect(label: "TOKEN") 
       with {:ok, token} <- token_from_header(conn)
       do
          {:ok,  authenticated(token)}

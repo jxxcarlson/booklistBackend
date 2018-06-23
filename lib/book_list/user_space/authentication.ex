@@ -74,23 +74,41 @@ defmodule BookList.UserSpace.Authentication do
   def get_user!(id), do: Repo.get!(User, id)
 
 
+  def email_is_valid(email) do
+    cond do
+      String.contains?(email, "@")-> {:ok, email}
+      true -> {:error, "#{email} is an invalid email address"}
+    end
+  end
+
+  def email_is_available(email) do
+    case Query.get_by_email(email) do
+      {:ok, user} -> {:error, "Email address #{email} is taken"}
+      {:error, _} -> {:ok, email}
+    end
+  end
+
+  def username_is_available(username) do
+    case Query.get_by_username(username) do
+      {:ok, user} -> {:error, "Username #{username} is taken"}
+      {:error, _} -> {:ok, username}
+    end
+  end
+
   def user_available(username, email) do
     username = username || ""
     email = email || ""
     errors = []
-    cond do
-      String.length(username) < 4 ->
-          errors ++ ["Username must have at least four characters"]
-      not (String.contains? email, "@") ->
-          errors ++ ["Email is invalid"]
-      Query.get_by_email(email) != nil ->
-          errors ++ ["That email is taken"]
-      Query.get_by_username(username) != nil ->
-          errors ++ ["That username is taken"]
-      true ->
-          errors
+    with  {:ok, email} <- email_is_valid(email),
+      {:ok, email} <- email_is_available(email),
+      {:ok, username} <- username_is_available(username)
+    do
+      {:ok, [username, email]}
+    else
+      err -> err
     end
   end
+
 
   @doc """
   Creates a user.

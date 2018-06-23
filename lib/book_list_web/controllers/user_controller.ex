@@ -10,7 +10,7 @@ defmodule BookListWeb.UserController do
   action_fallback BookListWeb.FallbackController
 
   def authenticate(conn, %{"password" => password, "email" => email}) do
-      with user <- Query.get_by_email(email),
+      with {:ok, user} <- Query.get_by_email(email),
         {:ok, _} <- Authentication.checkpw2(password, user.password_hash),
         {:ok, token} <- Token.get(user.id, user.email, 86400*30 )
       do
@@ -44,13 +44,9 @@ defmodule BookListWeb.UserController do
   end
 
   def blurb(conn, %{"username" => username}) do
-    user = BookList.UserSpace.Query.get_by_username(username)
-    if user != nil do
-      IO.puts "blurb, user = #{user.firstname}"
-      render(conn, "blurb.json", blurb: user.blurb)
-    else
-      IO.puts "ERROR (DT)"
-      render(conn, "error.json", error: "user not found")
+    case BookList.UserSpace.Query.get_by_username(username) do
+      {:ok, user} -> render(conn, "blurb.json", blurb: user.blurb)
+      {:error, _} -> render(conn, "error.json", error: "user not found")
     end
   end
 
@@ -63,6 +59,7 @@ defmodule BookListWeb.UserController do
     user = UserSpace.get_user!(id)
     with {:ok, result} <- Token.authenticated_from_header(conn),
        {:ok, %User{} = user} <- UserSpace.update_user(user, user_params) do
+       IO.puts "Update user, good branch"
        render(conn, "reply.json", message: "User updated")
     else
        err -> render(conn, "reply.json", message: "Error: not authorized")

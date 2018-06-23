@@ -21,7 +21,8 @@ defmodule BookListWeb.UserView do
       token: token,
       blurb: "empty blurb",
       email: user.email,
-      public: user.public || false
+      public: user.public || false,
+      follow: user.follow
     }
   end
 
@@ -39,7 +40,8 @@ defmodule BookListWeb.UserView do
       firstname: user.firstname,
       token: token,
       blurb: user.blurb || "",
-      public: user.public || false
+      public: user.public || false,
+      follow: user.follow
     }
   end
 

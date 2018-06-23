@@ -15,20 +15,18 @@ defmodule BookList.UserSpace.User do
     field :admin, :boolean, default: false
     field :blurb, :string, default: ""
     field :public, :boolean, default: false
+    field :follow, {:array, :string}, default: []
 
     timestamps()
   end
 
   @doc false
-  def changeset1(user, attrs) do
-    user
-    |> cast(attrs, [:username, :email])
-    |> validate_required([:username, :email])
-  end
+
 
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:firstname, :lastname, :username, :public, :blurb, :email, :password, :password_hash])
+    |> cast(attrs, [:firstname, :lastname, :username, :public,
+      :blurb, :email, :password, :password_hash, :follow])
     |> validate_required([:firstname, :username, :email])
   end
 
@@ -57,6 +55,8 @@ defmodule BookList.UserSpace.User do
       _ -> {:ok, result}
     end
   end
+
+
 
   #  def get_user_id_by_email(email) do
   #    query = from(
