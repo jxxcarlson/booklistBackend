@@ -22,7 +22,8 @@ defmodule BookListWeb.UserView do
       blurb: user.blurb,
       email: user.email,
       public: user.public || false,
-      follow: user.follow || [ ]
+      follow: user.follow || [ ],
+      admin: user.admin || false
     }
   end
 
@@ -35,7 +36,7 @@ defmodule BookListWeb.UserView do
       email: user.email,
       public: user.public || false,
       follow: user.follow || [ ],
-      admin: user.admin
+      admin: user.admin || false
     }
   end
 
