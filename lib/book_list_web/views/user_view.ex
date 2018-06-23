@@ -3,7 +3,7 @@ defmodule BookListWeb.UserView do
   alias BookListWeb.UserView
 
   def render("index.json", %{users: users}) do
-    %{data: render_many(users, UserView, "user_short.json")}
+    %{data: render_many(users, UserView, "sanitized_user.json")}
   end
 
   def render("public_index.json", %{users: users}) do
@@ -19,19 +19,28 @@ defmodule BookListWeb.UserView do
       username: user.username,
       firstname: user.firstname,
       token: token,
-      blurb: "empty blurb",
+      blurb: user.blurb,
       email: user.email,
       public: user.public || false,
       follow: user.follow || [ ]
     }
   end
 
-  def render("public_user.json", %{user: user}) do
-    %{ username: user.username}
+  def render("sanitized_user.json", %{user: user}) do
+    %{id: user.id,
+      username: user.username,
+      firstname: user.firstname,
+      token: "fake token",
+      blurb: user.blurb || "",
+      email: user.email,
+      public: user.public || false,
+      follow: user.follow || [ ],
+      admin: user.admin
+    }
   end
 
-  def render("user_short.json", %{user: user}) do
-    %{ username: user.username, follow: user.follow || []}
+  def render("public_user.json", %{user: user}) do
+    %{ username: user.username}
   end
 
   ###
@@ -45,7 +54,8 @@ defmodule BookListWeb.UserView do
       token: token,
       blurb: user.blurb || "",
       public: user.public || false,
-      follow: user.follow || []
+      follow: user.follow || [],
+      admin: user.admin || false
     }
   end
 
