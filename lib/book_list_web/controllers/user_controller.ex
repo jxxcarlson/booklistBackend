@@ -21,7 +21,8 @@ defmodule BookListWeb.UserController do
   end
 
   def index(conn, params) do
-    if params["public"] == "YadaBada" do
+    params |> IO.inspect(label: "params")
+    if params["public"] == "all321" do
         render(conn, "index.json", users: UserSpace.list_users())
     else
         render(conn, "public_index.json", users: UserSpace.list_public_users())
