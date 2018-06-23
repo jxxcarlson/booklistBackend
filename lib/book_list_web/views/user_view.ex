@@ -31,7 +31,7 @@ defmodule BookListWeb.UserView do
   end
 
   def render("user_short.json", %{user: user}) do
-    %{ username: user.username, follow: user.follow}
+    %{ username: user.username, follow: user.follow || []}
   end
 
   ###
