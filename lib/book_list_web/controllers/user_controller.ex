@@ -20,12 +20,24 @@ defmodule BookListWeb.UserController do
       end
   end
 
-  def index(conn, params) do
+  def index1(conn, params) do
     params |> IO.inspect(label: "params")
     if params["public"] == "yes" do
        render(conn, "public_index.json", users: UserSpace.list_public_users())
     else
        render(conn, "index.json", users: UserSpace.list_users())
+    end
+  end
+
+  def index(conn, params) do
+    params |> IO.inspect(label: "params")
+    cond do
+       params["public"] == "yes" ->
+         render(conn, "public_index.json", users: UserSpace.list_public_users())
+       params["all"] == "yes" ->
+         render(conn, "index.json", users: UserSpace.list_users())
+       params["all"] == "annotated" ->
+         render(conn, "annotated_index.json", users: UserSpace.list_annotated_users())
     end
   end
 

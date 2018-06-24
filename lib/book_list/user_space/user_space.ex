@@ -119,5 +119,20 @@ defmodule BookList.UserSpace do
     end
   end
 
+  def annotated_user(user) do
+    number_of_books = length(Repo.preload(user, :book).book)
+    Map.merge user, %{number_of_books: number_of_books}
+  end
+
+  def list_annotated_users do
+    User
+      |> BookList.UserSpace.Query.sort_by_username
+      |> Repo.all
+      |> Enum.map(fn(u) -> annotated_user(u) end)
+  end
+
+  # uu = User |> BookList.UserSpace.Query.sort_by_username |> Repo.all
+  # ll = uu |> Enum.map(fn(u) -> length(Repo.preload(u, :book).book) end)
+  # vv = Enum.zip uu, ll
 
 end

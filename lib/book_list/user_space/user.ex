@@ -8,14 +8,16 @@ defmodule BookList.UserSpace.User do
   schema "users" do
     field :email, :string
     field :username, :string
-    field :firstname, :string, default: "Undisclosed"
-    field :lastname, :string, default: "Undisclosed"
+    field :firstname, :string, default: "Anon"
+    field :lastname, :string, default: "Anon"
     field :password_hash, :string
     field :password, :string, virtual: true
     field :admin, :boolean, default: false
     field :blurb, :string, default: ""
     field :public, :boolean, default: false
     field :follow, {:array, :string}, default: []
+
+    has_many :book, BookList.BookSpace.Book  
 
     timestamps()
   end

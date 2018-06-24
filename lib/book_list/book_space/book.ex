@@ -15,7 +15,7 @@ defmodule BookList.BookSpace.Book do
     field :subtitle, :string, default: ""
     field :user_id, :id
 
-
+    # belongs_to :user, BookList.UserSpace.User  
     timestamps()
   end
 
