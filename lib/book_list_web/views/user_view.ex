@@ -27,6 +27,7 @@ defmodule BookListWeb.UserView do
       email: user.email,
       public: user.public || false,
       follow: user.follow || [ ],
+      followers: user.followers || [ ],
       admin: user.admin || false
     }
   end
@@ -40,6 +41,7 @@ defmodule BookListWeb.UserView do
       email: user.email,
       public: user.public || false,
       follow: user.follow || [ ],
+      followers: user.followers || [ ],
       admin: user.admin || false
     }
   end
@@ -53,6 +55,7 @@ defmodule BookListWeb.UserView do
       email: user.email,
       public: user.public || false,
       follow: user.follow || [ ],
+      followers: user.followers || [ ],
       admin: user.admin || false,
       numberOfBooks: user.number_of_books || 0
     }
@@ -74,6 +77,7 @@ defmodule BookListWeb.UserView do
       blurb: user.blurb || "",
       public: user.public || false,
       follow: user.follow || [],
+      followers: user.followers || [],
       admin: user.admin || false
     }
   end

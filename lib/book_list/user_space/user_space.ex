@@ -74,10 +74,21 @@ defmodule BookList.UserSpace do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_user(%User{} = user, attrs) do
-    user
-    |> User.changeset(attrs)
-    |> Repo.update()
+  def update_user(%User{} = user, attrs, query_string) do
+    [command, arg] = (if query_string == "" || (not (String.contains? query_string, "=")) do 
+      "none=none"
+    else 
+      query_string 
+    end) |> String.split "="
+
+    IO.puts "command = #{command}"
+    IO.puts "arg = #{arg}"
+
+    cond do 
+      command == "follow_user" -> BookList.UserSpace.follow_user(user.username, arg)
+      command == "unfollow_user" -> BookList.UserSpace.unfollow_user(user.username, arg)
+      command == "none" -> user |> User.changeset(attrs) |> Repo.update()
+    end
   end
 
   @doc """
@@ -109,12 +120,37 @@ defmodule BookList.UserSpace do
     User.changeset(user, %{})
   end
 
-  def add_follower(username, follower_name) do
+  def follow_user(username, followed_user_name) do
     with {:ok, user} <- Query.get_by_username(username),
-      {:ok, follower} <- Query.get_by_username(follower_name)
+      {:ok, followed_user} <- Query.get_by_username(followed_user_name)
     do
-      followers = (user.follow || [ ]) ++ [follower_name]
-      cs = User.changeset(user, %{follow: followers})
+      # Add followed user to user
+      users_i_follow = (user.follow || [ ]) ++ [followed_user_name]
+      users_i_follow |> IO.inspect(label: "XXX: users I (#{username} I follow")
+      cs = User.changeset(user, %{follow: users_i_follow})
+      Repo.update(cs)
+
+      # Add user as follower of followed user
+      followers = (followed_user.followers || [ ]) ++ [username]
+      followers |> IO.inspect(label: "XXX: followers of #{followed_user.username}")
+      cs2 = User.changeset(followed_user, %{followers: followers})
+      Repo.update(cs2)
+
+    end
+  end
+
+  def unfollow_user(username, followed_user_name) do
+    with {:ok, user} <- Query.get_by_username(username),
+      {:ok, followed_user} <- Query.get_by_username(followed_user_name)
+    do
+      # Remove followed user from user
+      users_i_follow = (user.follow || [ ]) |> Enum.filter(fn(name) -> name != followed_user_name end)
+      cs = User.changeset(user, %{follow: users_i_follow})
+      Repo.update(cs)
+
+      # Remove user as follower of followed user
+      followers = (followed_user.followers || [ ]) |> Enum.filter(fn(name) -> name != username end)
+      cs = User.changeset(followed_user, %{followers: followers})
       Repo.update(cs)
     end
   end

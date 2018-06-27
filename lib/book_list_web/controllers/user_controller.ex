@@ -71,8 +71,7 @@ defmodule BookListWeb.UserController do
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = UserSpace.get_user!(id)
     with {:ok, result} <- Token.authenticated_from_header(conn),
-       {:ok, %User{} = user} <- UserSpace.update_user(user, user_params) do
-       IO.puts "Update user, good branch"
+       {:ok, %User{} = user} <- UserSpace.update_user(user, user_params, conn.query_string || "") do
        render(conn, "reply.json", message: "User updated")
     else
        err -> render(conn, "reply.json", message: "Error: not authorized")
