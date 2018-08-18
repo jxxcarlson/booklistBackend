@@ -21,7 +21,9 @@ defmodule BookListWeb.BookView do
       pagesRead: book.pages_read,
       rating: book.rating,
       public: book.public,
-      category: book.category || ""
+      category: book.category || "",
+      startDateString: book.start_date_string,
+      finishDateString: book.finish_date_string
     }
   end
 
