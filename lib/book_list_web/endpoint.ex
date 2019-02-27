@@ -16,9 +16,9 @@ defmodule BookListWeb.Endpoint do
   if code_reloading? do
     plug Phoenix.CodeReloader
   end
-  
+
   plug Corsica,
-    origins: ["http://localhost:8080","http://206.189.184.194", "http://booklib.io", "https://booklib.io"],
+    origins: ["http://localhost:8000", "http://localhost:8080","http://206.189.184.194", "http://booklib.io", "https://booklib.io"],
     log: [rejected: :error, invalid: :warn, accepted: :debug],
     allow_headers: ["content-type", "accept", "authorization"]
 
@@ -44,7 +44,7 @@ defmodule BookListWeb.Endpoint do
 
   plug BookListWeb.Router
 
-  
+
   @doc """
   Callback invoked for dynamically configuring the endpoint.
 
