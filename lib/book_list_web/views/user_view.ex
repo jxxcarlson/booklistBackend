@@ -19,16 +19,34 @@ defmodule BookListWeb.UserView do
   end
 
   def render("user.json", %{user: user, token: token}) do
-    %{id: user.id,
+    %{
       username: user.username,
+      id: user.id,
+      email: user.email,
       firstname: user.firstname,
       token: token,
       blurb: user.blurb,
-      email: user.email,
       public: user.public || false,
       follow: user.follow || [ ],
       followers: user.followers || [ ],
       admin: user.admin || false
+      inserted_at: user.inserted_at
+    }
+  end
+
+  def render("authenticated.json",  %{user: user, token: token}) do
+    %{
+      username: user.username,
+      id: user.id,
+      email: user.email,
+      firstname: user.firstname,
+      token: token,
+      blurb: user.blurb || "",
+      public: user.public || false,
+      follow: user.follow || [],
+      followers: user.followers || [],
+      admin: user.admin || false,
+      inserted_at: user.inserted_at
     }
   end
 
@@ -67,21 +85,7 @@ defmodule BookListWeb.UserView do
 
   ###
 
-  def render("authenticated.json",  %{user: user, token: token}) do
-    %{
-      username: user.username,
-      id: user.id,
-      email: user.email,
-      firstname: user.firstname,
-      token: token,
-      blurb: user.blurb || "",
-      public: user.public || false,
-      follow: user.follow || [],
-      followers: user.followers || [],
-      admin: user.admin || false,
-      inserted_at: user.inserted_at 
-    }
-  end
+
 
   def render("error.json", %{error: message}) do
     %{ error: message }
