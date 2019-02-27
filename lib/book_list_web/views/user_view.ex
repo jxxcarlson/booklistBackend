@@ -29,7 +29,7 @@ defmodule BookListWeb.UserView do
       public: user.public || false,
       follow: user.follow || [ ],
       followers: user.followers || [ ],
-      admin: user.admin || false
+      admin: user.admin || false,
       inserted_at: user.inserted_at
     }
   end
