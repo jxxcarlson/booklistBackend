@@ -27,6 +27,7 @@ defmodule BookListWeb.BookController do
   end
 
   def create(conn, %{"book" => book_params}) do
+    IO.puts "CREATE BOOK"
     with {:ok, result} <- Token.authenticated_from_header(conn),
       {:ok, %Book{} = book} <- BookSpace.create_book(book_params) do
           conn

@@ -10,6 +10,7 @@ defmodule BookListWeb.UserController do
   action_fallback BookListWeb.FallbackController
 
   def authenticate(conn, %{"password" => password, "email" => email}) do
+      IO.puts "AUTHENTICATE"
       with {:ok, user} <- Query.get_by_email(email),
         {:ok, _} <- Authentication.checkpw2(password, user.password_hash),
         {:ok, token} <- Token.get(user.id, user.email, 86400*30 )

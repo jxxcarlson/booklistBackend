@@ -28,7 +28,7 @@ resources "/books", BookController
 $ iex -S mix phx.server
 
 ## CREATE ONE USER RECORD
-iex(1)> alias BookList.Repo; alias BookList.BookSpace.User
+iex(1)> alias BookList.Repo; alias BookList.UserSpace.User
 iex(3)> params = %{"username": "jxxcarlson", "email": "jxxcarlson@gmail.com"}
 iex(5)> ucs = User.changeset(%User{}, params)
 iex(6)> Repo.insert(ucs)
@@ -47,5 +47,8 @@ iex(9)> Repo.insert(bcs)
 ## VERIFY BOOK
 iex(14)> Repo.get(Book, 1)
 iex(15)> Repo.all(Book)
+
+## RUN ON HEROKU
+`heroku run "POOL_SIZE=2 iex -S mix phx.server"`
 
 ```
