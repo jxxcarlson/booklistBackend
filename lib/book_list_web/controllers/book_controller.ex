@@ -34,6 +34,7 @@ defmodule BookListWeb.BookController do
           |> put_status(:created)
           |> put_resp_header("location", book_path(conn, :show, book))
           |> render("show.json", book: book)
+          |> IO.inspect(label: "CREATE BOOK, SUCCESS")
     else
           err -> render(conn, "reply.json", message: "Error: not authorized")
     end
