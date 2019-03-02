@@ -13,6 +13,7 @@ defmodule BookListWeb.BookView do
   def render("book.json", %{book: book}) do
     %{
       id: book.id,
+      user_id: book.user_id,
       title: book.title,
       subtitle: book.subtitle,
       author: book.author,
@@ -30,5 +31,5 @@ defmodule BookListWeb.BookView do
   def render("reply.json", %{message: message}) do
     %{ message: message }
   end
-  
+
 end
