@@ -27,10 +27,17 @@ defmodule BookListWeb.UserView do
       token: token,
       blurb: user.blurb,
       public: user.public || false,
-      follow: user.follow || [ ],
+      # follow: user.follow || [ ],
+      follow: Enum.map(user.follow, &follow_json/1),
       followers: user.followers || [ ],
       admin: user.admin || false,
       inserted_at: user.inserted_at
+    }
+  end
+
+  def follow_json(username) do
+  %{
+    username: username
     }
   end
 
