@@ -71,6 +71,7 @@ defmodule BookListWeb.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = UserSpace.get_user!(id)
+    user_params |> IO.inspect(label: "MY USER_PARAMS")
     with {:ok, result} <- Token.authenticated_from_header(conn),
        {:ok, %User{} = user} <- UserSpace.update_user(user, user_params, conn.query_string || "") do
        render(conn, "reply.json", message: "User updated")

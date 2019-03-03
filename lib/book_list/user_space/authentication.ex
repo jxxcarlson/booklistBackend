@@ -142,6 +142,7 @@ defmodule BookList.UserSpace.Authentication do
   """
   def update_user(%User{} = user, attrs) do
     user
+    |> IO.inspect(label: "Update User")
     |> User.changeset(attrs)
     |> Repo.update()
   end

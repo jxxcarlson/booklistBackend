@@ -75,20 +75,27 @@ defmodule BookList.UserSpace do
 
   """
   def update_user(%User{} = user, attrs, query_string) do
-    [command, arg] = (if query_string == "" || (not (String.contains? query_string, "=")) do 
-      "none=none"
-    else 
-      query_string 
-    end) |> String.split "="
+    [command, arg] = (if query_string == "" || (not (String.contains? query_string, "=")) do
+                        "none=none"
+                      else
+                        query_string
+                      end) |> String.split "="
 
     IO.puts "command = #{command}"
     IO.puts "arg = #{arg}"
 
-    cond do 
+    attrs |> IO.inspect(label: "XX ATTRS")
+    user  |> IO.inspect(label: "XX USER")
+
+    cs = User.changeset(user, attrs)
+    cond do
       command == "follow_user" -> BookList.UserSpace.follow_user(user.username, arg)
       command == "unfollow_user" -> BookList.UserSpace.unfollow_user(user.username, arg)
-      command == "none" -> user |> User.changeset(attrs) |> Repo.update()
+      # command == "none" -> user |> User.changeset(attrs) |> Repo.update()
+      command == "none" -> Repo.update(cs)
     end
+
+    # user |> User.changeset(attrs) |> Repo.update()
   end
 
   @doc """
