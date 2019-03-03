@@ -29,7 +29,7 @@ defmodule BookListWeb.UserView do
       public: user.public || false,
       # follow: user.follow || [ ],
       follow: Enum.map(user.follow, &follow_json/1),
-      followers: user.followers || [ ],
+      followers: Enum.map(user.followers, &follow_json/1), # user.followers || [ ],
       admin: user.admin || false,
       inserted_at: user.inserted_at
     }
