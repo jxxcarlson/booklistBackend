@@ -11,4 +11,5 @@ defmodule BookList.Repo.Migrations.Groups do
 
       timestamps()
     end
+  end
 end
