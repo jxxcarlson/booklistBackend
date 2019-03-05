@@ -15,3 +15,5 @@ erl_crash.dump
 # variables.
 /config/*.secret.exs
 latest.dump
+.idea/
+book_list.iml

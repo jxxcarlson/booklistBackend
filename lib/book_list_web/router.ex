@@ -9,7 +9,7 @@ defmodule BookListWeb.Router do
   post "/api/users/authenticate", BookListWeb.UserController, :authenticate
   get "/api/blurb/:username", BookListWeb.UserController, :blurb
   resources "/api/books", BookListWeb.BookController
-
+  resources "/api/groups", BookListWeb.GroupController
 
   scope "/api", BookListWeb do
     pipe_through :api
