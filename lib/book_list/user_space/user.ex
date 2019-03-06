@@ -17,6 +17,7 @@ defmodule BookList.UserSpace.User do
     field :public, :boolean, default: false
     field :follow, {:array, :string}, default: []
     field :followers, {:array, :string}, default: []
+    field :tags, {:array, :string}, default: []
 
     has_many :book, BookList.BookSpace.Book  
 
@@ -29,7 +30,7 @@ defmodule BookList.UserSpace.User do
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:firstname, :lastname, :username, :public,
-      :blurb, :email, :password, :password_hash,  :follow, :followers])
+      :blurb, :email, :password, :password_hash,  :follow, :followers, :tags])
     |> validate_required([:firstname, :username, :email])
   end
 

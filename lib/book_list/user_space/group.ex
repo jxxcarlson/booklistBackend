@@ -7,6 +7,23 @@ defmodule BookList.UserSpace.Group do
   alias BookList.UserSpace.Group
   alias BookList.Repo
 
+  @doc"""
+  cs = Group.changeset %Group{}, %{"chair": "jxxcarlson", "name": "Trillium"}
+
+  Repo.insert cs
+
+  Repo.all(Group)
+
+  g = Repo.get(Group, 1)
+
+  cs = Group.changeset g, %{"cochair": "dilibop"}
+
+  Repo.update(cs)
+
+  cs = Group.changeset g, %{"members": ["jxxcarlson", "dilibop"]}
+
+  cs = Group.changeset g, %{"blurb": "This is a test."}
+"""
   schema "groups" do
     field :name, :string
     field :chair, :string
@@ -22,7 +39,7 @@ defmodule BookList.UserSpace.Group do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:firstName, :chair, :cochair, :blurb])
-    |> validate_required([:firstName, :chair, :cochair, :blurb])
+    |> cast(params, [:name, :chair, :cochair, :blurb, :members])
+    |> validate_required([:name, :chair])
   end
 end

@@ -30,7 +30,8 @@ defmodule BookListWeb.UserView do
       follow: Enum.map(user.follow, &follow_json/1),
       followers: Enum.map(user.followers, &follow_json/1), # user.followers || [ ],
       admin: user.admin || false,
-      inserted_at: user.inserted_at
+      inserted_at: user.inserted_at,
+      tags: user.tags || []
     }
   end
 
@@ -52,7 +53,8 @@ defmodule BookListWeb.UserView do
       follow: Enum.map(user.follow, &follow_json/1),
       followers: Enum.map(user.followers, &follow_json/1),
       admin: user.admin || false,
-      inserted_at: user.inserted_at
+      inserted_at: user.inserted_at,
+      tags: user.tags || []
     }
   end
 

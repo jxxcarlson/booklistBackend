@@ -1,12 +1,13 @@
 defmodule BookListWeb.GroupView do
   use BookListWeb, :view
+  alias BookListWeb.GroupView
 
   def render("index.json", %{groups: groups}) do
-    %{data: render_many(groups, BookList.GroupView, "group.json")}
+    %{data: render_many(groups, GroupView, "group.json")}
   end
 
   def render("show.json", %{group: group}) do
-    %{data: render_one(group, BookList.GroupView, "group.json")}
+    %{data: render_one(group, GroupView, "group.json")}
   end
 
   def render("group.json", %{group: group}) do
@@ -14,6 +15,10 @@ defmodule BookListWeb.GroupView do
       name: group.name,
       chair: group.chair,
       cochair: group.cochair,
-      blurb: group.blurb}
+      blurb: group.blurb,
+      members: group.members
+    }
   end
+
+
 end
