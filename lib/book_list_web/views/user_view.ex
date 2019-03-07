@@ -61,16 +61,20 @@ defmodule BookListWeb.UserView do
   def render("sanitized_user.json", %{user: user}) do
     %{id: user.id,
       username: user.username,
-      firstname: user.firstname,
+      firstname: user.firstname || "X",
       token: "fake token",
-      blurb: user.blurb || "",
+      blurb: user.blurb || "X",
       email: user.email,
       public: user.public || false,
-      follow: user.follow || [ ],
-      followers: user.followers || [ ],
-      admin: user.admin || false
+      follow: Enum.map(user.follow || [] |> Enum.filter(fn(x) -> x != "" end), &follow_json/1),
+      followers: Enum.map(user.followers || [] |> Enum.filter(fn(x) -> x != "" end), &follow_json/1),
+      admin: user.admin || false,
+      inserted_at: user.inserted_at,
+      tags: user.tags || []
     }
   end
+
+
 
   def render("annotated_user.json", %{user: user}) do
     %{id: user.id,
@@ -83,7 +87,7 @@ defmodule BookListWeb.UserView do
       follow: user.follow || [ ],
       followers: user.followers || [ ],
       admin: user.admin || false,
-      numberOfBooks: user.number_of_books || 0
+      numberOfBooks: user.number_of_books || 0,
     }
   end
 

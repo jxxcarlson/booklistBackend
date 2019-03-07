@@ -83,11 +83,9 @@ defmodule BookList.UserSpace do
 
     IO.puts "command = #{command}"
     IO.puts "arg = #{arg}"
-
     attrs |> IO.inspect(label: "XX ATTRS")
-    user  |> IO.inspect(label: "XX USER")
 
-    cs = User.changeset(user, attrs)
+    cs = User.changeset(user, attrs) |> IO.inspect(label: "XX CS")
     cond do
       command == "follow_user" -> BookList.UserSpace.follow_user(user.username, arg)
       command == "unfollow_user" -> BookList.UserSpace.unfollow_user(user.username, arg)
