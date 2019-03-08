@@ -50,8 +50,8 @@ defmodule BookListWeb.UserView do
       token: token,
       blurb: user.blurb || "",
       public: user.public || false,
-      follow: Enum.map(user.follow, &follow_json/1),
-      followers: Enum.map(user.followers, &follow_json/1),
+      follow: Enum.map(user.follow || [] |> Enum.filter(fn(x) -> x != "" end), &follow_json/1),
+      followers: Enum.map(user.followers || [] |> Enum.filter(fn(x) -> x != "" end), &follow_json/1),
       admin: user.admin || false,
       inserted_at: user.inserted_at,
       tags: user.tags || []
