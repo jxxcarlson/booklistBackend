@@ -84,9 +84,11 @@ defmodule BookListWeb.UserView do
       blurb: user.blurb || "",
       email: user.email,
       public: user.public || false,
-      follow: user.follow || [ ],
-      followers: user.followers || [ ],
+      follow: Enum.map(user.follow || [] |> Enum.filter(fn(x) -> x != "" end), &follow_json/1),
+      followers: Enum.map(user.followers || [] |> Enum.filter(fn(x) -> x != "" end), &follow_json/1),
       admin: user.admin || false,
+      inserted_at: user.inserted_at,
+      tags: user.tags || [],
       numberOfBooks: user.number_of_books || 0,
     }
   end
