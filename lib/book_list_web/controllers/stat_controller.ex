@@ -1,7 +1,9 @@
-defmodule BookList.StatController do
-  use BookList.Web, :controller
+defmodule BookListWeb.StatController do
+  use BookListWeb, :controller
 
-  alias BookList.Stat
+  alias BookList.BookSpace.Stat
+  alias BookList.BookSpace.Book
+  alias BookList.Repo
 
   def index(conn, _params) do
     stats = Repo.all(Stat)
@@ -52,4 +54,10 @@ defmodule BookList.StatController do
 
     send_resp(conn, :no_content, "")
   end
+
+  ### HELPERS
+
+
 end
+
+
