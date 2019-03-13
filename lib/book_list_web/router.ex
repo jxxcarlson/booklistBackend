@@ -10,7 +10,8 @@ defmodule BookListWeb.Router do
   get "/api/blurb/:username", BookListWeb.UserController, :blurb
   resources "/api/books", BookListWeb.BookController
   resources "/api/groups", BookListWeb.GroupController
-  resources "/stats", StatController, except: [:new, :edit]
+  resources "/stats", BookListWeb.StatController, except: [:new, :edit]
+  get "/api/stats/last", BookListWeb.StatController, :last
 
   scope "/api", BookListWeb do
     pipe_through :api

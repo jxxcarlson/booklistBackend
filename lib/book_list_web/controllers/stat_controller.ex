@@ -1,6 +1,7 @@
 defmodule BookListWeb.StatController do
   use BookListWeb, :controller
 
+  import Ecto.Query
   alias BookList.BookSpace.Stat
   alias BookList.BookSpace.Book
   alias BookList.Repo
@@ -8,6 +9,11 @@ defmodule BookListWeb.StatController do
   def index(conn, _params) do
     stats = Repo.all(Stat)
     render(conn, "index.json", stats: stats)
+  end
+
+  def last(conn, _params) do
+    stat = Repo.one(from x in Stat, order_by: [desc: x.id], limit: 1)
+    render(conn, "stat.json", stat: stat)
   end
 
   def create(conn, %{"stat" => stat_params}) do

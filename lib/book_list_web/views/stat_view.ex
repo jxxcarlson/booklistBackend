@@ -1,5 +1,5 @@
-defmodule BookList.StatView do
-  use BookList.Web, :view
+defmodule BookListWeb.StatView do
+  use BookListWeb, :view
 
   def render("index.json", %{stats: stats}) do
     %{data: render_many(stats, BookList.StatView, "stat.json")}
