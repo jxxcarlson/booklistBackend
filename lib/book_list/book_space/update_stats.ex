@@ -5,7 +5,9 @@ defmodule BookList.BookSpace.UpdateStats do
 
   alias BookList.BookSpace.Stat
 
-  @timeout 3600000 # one hour
+  # @timeout 3600000 # one hour
+
+  @timeout 60_000 # one minute
 
   def start_link() do
      GenServer.start_link(__MODULE__, [])
