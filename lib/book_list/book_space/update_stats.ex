@@ -7,7 +7,7 @@ defmodule BookList.BookSpace.UpdateStats do
 
   # @timeout 3600000 # one hour
 
-  @timeout 60_000 # one minute
+  @timeout 600_000 # ten minutes
 
   def start_link() do
      GenServer.start_link(__MODULE__, [])
@@ -16,7 +16,7 @@ defmodule BookList.BookSpace.UpdateStats do
   def init(state) do
     # wait 2 secs for a call. Since nothing sends a message to this process,
     # it gets the timeout message
-    IO.puts "Updating stats (1)"
+    Stat.delete_for_today
     Stat.create
     {:ok, state, @timeout}
   end
