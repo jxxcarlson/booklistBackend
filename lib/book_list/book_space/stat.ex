@@ -51,5 +51,19 @@ defmodule BookList.BookSpace.Stat do
     Repo.insert(cs)
   end
 
+  def for_today do
+
+    today = Date.utc_today
+
+    Enum.filter (Repo.all(Stat)), fn(s) -> s.updated_at.day == today.day end
+
+  end
+
+  def delete_for_today do
+
+    Enum.map Stat.for_today, (fn(s) -> Repo.delete(s) end)
+
+  end
+
 
 end
