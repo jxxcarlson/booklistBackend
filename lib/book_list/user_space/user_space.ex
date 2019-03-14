@@ -176,4 +176,6 @@ defmodule BookList.UserSpace do
   # ll = uu |> Enum.map(fn(u) -> length(Repo.preload(u, :book).book) end)
   # vv = Enum.zip uu, ll
 
+
+
 end
