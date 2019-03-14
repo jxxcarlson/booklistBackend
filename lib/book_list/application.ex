@@ -14,6 +14,11 @@ defmodule BookList.Application do
       supervisor(BookListWeb.Endpoint, []),
       # Start your own worker by calling: BookList.Worker.start_link(arg1, arg2, arg3)
       # worker(BookList.Worker, [arg1, arg2, arg3]),
+
+      worker(BookList.BookSpace.UpdateStats, [])
+
+      # supervisor(BookList.BookSpace.UpdateStats, [])
+      # BookList.Worker.start_link(arg1, arg2, arg3)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
