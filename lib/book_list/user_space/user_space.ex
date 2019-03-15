@@ -233,4 +233,21 @@ defmodule BookList.UserSpace do
 
   end
 
+  def fixstats(id) do
+    user = Repo.get(User, id)
+    head_stat =  user.reading_stats |> hd
+    updated_stats = [head_stat, %{"date" => "2019-02-28", "pages_read" => 0} ]
+    params = %{"reading_stats": updated_stats}
+    cs = User.changeset(user, params)
+    Repo.update(cs)
+  end
+
+  def zerostats(id) do
+    user = Repo.get(User, id)
+    updated_stats = [ ]
+    params = %{"reading_stats": updated_stats}
+    cs = User.changeset(user, params)
+    Repo.update(cs)
+  end
+
 end
