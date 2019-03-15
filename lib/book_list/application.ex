@@ -15,7 +15,8 @@ defmodule BookList.Application do
       # Start your own worker by calling: BookList.Worker.start_link(arg1, arg2, arg3)
       # worker(BookList.Worker, [arg1, arg2, arg3]),
 
-      worker(BookList.BookSpace.UpdateStats, [])
+      worker(BookList.BookSpace.UpdateStats, []),
+      worker(BookList.UserSpace.UserStatsUpdate, [])
 
       # supervisor(BookList.BookSpace.UpdateStats, [])
       # BookList.Worker.start_link(arg1, arg2, arg3)

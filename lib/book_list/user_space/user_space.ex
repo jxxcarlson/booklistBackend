@@ -8,6 +8,7 @@ defmodule BookList.UserSpace do
 
   alias BookList.UserSpace.User
   alias BookList.UserSpace.Query
+  alias BookList.UserSpace
 
   @doc """
   Returns the list of users.
@@ -165,7 +166,7 @@ defmodule BookList.UserSpace do
     Map.merge user, %{number_of_books: number_of_books}
   end
 
-  def list_annotated_users do
+  def list_anenotated_users do
     User
       |> BookList.UserSpace.Query.sort_by_username
       |> Repo.all
@@ -176,6 +177,60 @@ defmodule BookList.UserSpace do
   # ll = uu |> Enum.map(fn(u) -> length(Repo.preload(u, :book).book) end)
   # vv = Enum.zip uu, ll
 
+  def last_reading_stat(user) do
+    stat = user.reading_stats |> hd
+    {:ok, date} = stat["date"] |> Date.from_iso8601
+    %{"date": date, "pages_read": stat["pages_read"]}
+  end
 
+  def parts_of_date_string(date_string) do
+    String.split date_string, "-"
+  end
+
+
+  def pages_read(user) do
+    books = BookList.BookSpace.Query.get_by_user_id(user.id)
+    Enum.sum (Enum.map books, (fn(b) -> b.pages_read end))
+  end
+
+
+  def updated_reading_stats(user, date, pages_read) do
+
+    date_string = date |> Date.to_iso8601
+    reading_stats = user.reading_stats
+    if reading_stats == []  do
+      [%{"date" => date_string, "pages_read" => pages_read} ]
+    else
+      updated_reading_stats_helper(user, date, pages_read)
+    end
+
+  end
+
+
+  def updated_reading_stats_helper(user, date, pages_read) do
+
+    reading_stats = user.reading_stats
+    [last_stat | remaining_stats] = reading_stats
+
+
+    [y, m, d] = parts_of_date_string last_stat["date"]
+
+    date_string = date |> Date.to_iso8601
+    [y1, m1, d1] = date_string |> parts_of_date_string
+
+    if y == y1 && m == m1 do
+      [%{"date" => date_string, "pages_read" => pages_read} |remaining_stats]
+    else
+      [%{"date" => date_string, "pages_read" =>  pages_read} | reading_stats]
+    end
+
+  end
+
+  def update_reading_stats(user, date) do
+    new_reading_stats = updated_reading_stats(user, date, UserSpace.pages_read(user))
+    cs = User.changeset(user, %{"reading_stats": new_reading_stats})
+    Repo.update(cs)
+
+  end
 
 end

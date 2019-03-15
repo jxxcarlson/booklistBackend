@@ -18,11 +18,24 @@ defmodule BookList.UserSpace.User do
     field :follow, {:array, :string}, default: []
     field :followers, {:array, :string}, default: []
     field :tags, {:array, :string}, default: []
+    field :reading_stats, {:array, :map}
 
-    has_many :book, BookList.BookSpace.Book  
 
     timestamps()
   end
+
+  defmodule BookList.UserSpace.User.ReadingStat do
+    use Ecto.Schema
+
+    embedded_schema do
+      field :date, :utc_datetime
+      field :pages_read, :integer
+    end
+  end
+
+
+  # params = %{"reading_stats": [%{"date" => ~D[2019-03-14], "pages_read" => 44}]}
+  # cs = User.changeset(u, params)
 
   @doc false
 
@@ -30,7 +43,7 @@ defmodule BookList.UserSpace.User do
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:firstname, :lastname, :username, :public,
-      :blurb, :email, :password, :password_hash,  :follow, :followers, :tags])
+      :blurb, :email, :password, :password_hash,  :follow, :followers, :tags, :reading_stats])
     |> validate_required([:firstname, :username, :email])
   end
 
