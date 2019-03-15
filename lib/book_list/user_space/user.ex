@@ -35,7 +35,7 @@ defmodule BookList.UserSpace.User do
 
 
   def pages_read(user) do
-    (hd user.pages_read).pages_read
+    (hd user.reading_stats)["pages_read"]
   end
 
   # params = %{"reading_stats": [%{"date" => ~D[2019-03-14], "pages_read" => 44}]}
