@@ -162,7 +162,7 @@ defmodule BookList.UserSpace do
   end
 
   def annotated_user(user) do
-    number_of_books = length(Repo.preload(user, :book).book)
+    number_of_books = User.pages_read(user)
     Map.merge user, %{number_of_books: number_of_books}
   end
 

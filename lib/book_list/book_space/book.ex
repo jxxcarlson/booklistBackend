@@ -17,7 +17,7 @@ defmodule BookList.BookSpace.Book do
     field :start_date_string, :string, default: ""
     field :finish_date_string, :string, default: ""
 
-    # belongs_to :user, BookList.UserSpace.User  
+    # belongs_to :user, BookList.UserSpace.User
     timestamps()
   end
 
