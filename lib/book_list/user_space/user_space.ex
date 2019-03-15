@@ -56,11 +56,31 @@ defmodule BookList.UserSpace do
 
   """
   def create_user(attrs \\ %{}) do
+    new_attrs = Map.merge initialReadingStat, attrs
+
     # attrs |> IO.inspect(label: "CREATE USER")
     %User{}
     # |> User.changeset(attrs)
-    |> User.registration_changeset(attrs)
+    |> User.registration_changeset(new_attrs)
     |> Repo.insert()
+  end
+
+  def initialReadingStat do
+    today = Date.utc_today
+    today_string = Date.to_iso8601(today)
+    y = today.year
+    m = today.month - 1
+    if m < 0 do
+      m = 12
+      y = y - 1
+    end
+    {:ok, date} = Date.new(y,m,28)
+    dateString = Date.to_iso8601(date)
+    %{"reading_stats" =>  [
+        %{"date" => today_string, "pages_read" => 0},
+        %{"date" => dateString, "pages_read" => 0}
+       ]
+     }
   end
 
   @doc """
