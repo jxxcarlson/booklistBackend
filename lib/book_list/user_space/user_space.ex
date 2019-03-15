@@ -166,7 +166,7 @@ defmodule BookList.UserSpace do
     Map.merge user, %{number_of_books: number_of_books}
   end
 
-  def list_anenotated_users do
+  def list_annotated_users do
     User
       |> BookList.UserSpace.Query.sort_by_username
       |> Repo.all
