@@ -31,7 +31,9 @@ defmodule BookListWeb.UserView do
       followers: Enum.map(user.followers, &follow_json/1), # user.followers || [ ],
       admin: user.admin || false,
       inserted_at: user.inserted_at,
-      tags: user.tags || []
+      tags: user.tags || [],
+      reading_stats: user.reading_stats || []
+
     }
   end
 
@@ -54,7 +56,8 @@ defmodule BookListWeb.UserView do
       followers: Enum.map(user.followers || [] |> Enum.filter(fn(x) -> x != "" end), &follow_json/1),
       admin: user.admin || false,
       inserted_at: user.inserted_at,
-      tags: user.tags || []
+      tags: user.tags || [],
+      reading_stats: user.reading_stats || []
     }
   end
 
@@ -70,7 +73,8 @@ defmodule BookListWeb.UserView do
       followers: Enum.map(user.followers || [] |> Enum.filter(fn(x) -> x != "" end), &follow_json/1),
       admin: user.admin || false,
       inserted_at: user.inserted_at,
-      tags: user.tags || []
+      tags: user.tags || [],
+      reading_stats: user.reading_stats || []
     }
   end
 
@@ -90,6 +94,7 @@ defmodule BookListWeb.UserView do
       inserted_at: user.inserted_at,
       tags: user.tags || [],
       numberOfBooks: user.number_of_books || 0,
+      reading_stats: user.reading_stats || []
     }
   end
 
