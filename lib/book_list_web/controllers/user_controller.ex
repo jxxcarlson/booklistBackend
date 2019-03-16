@@ -65,8 +65,9 @@ defmodule BookListWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
+    IO.puts "USER CONTROLLER SHOW, ID = #{id}"
     user = UserSpace.get_user!(id)
-    render(conn, "show.json", user: user)
+    render(conn, "sanitized_user.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

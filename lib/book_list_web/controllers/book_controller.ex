@@ -5,6 +5,9 @@ defmodule BookListWeb.BookController do
   alias BookList.BookSpace.Book
   alias BookList.BookSpace.Query
   alias BookList.UserSpace.Token
+  alias BookList.UserSpace
+  alias BookList.UserSpace.User
+  alias BookList.Repo
 
   action_fallback BookListWeb.FallbackController
 
@@ -49,6 +52,9 @@ defmodule BookListWeb.BookController do
     book = BookSpace.get_book!(id)
     with {:ok, result} <- Token.authenticated_from_header(conn),
       {:ok, %Book{} = book} <- BookSpace.update_book(book, book_params) do
+      user = Repo.get(User, book.user_id)
+      today = Date.utc_today
+      UserSpace.update_reading_stats(user, today)
       render(conn, "show.json", book: book)
     else
       err -> render(conn, "reply.json", message: "Error: not authorized")

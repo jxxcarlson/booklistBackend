@@ -80,6 +80,8 @@ defmodule BookListWeb.UserView do
 
 
 
+
+
   def render("annotated_user.json", %{user: user}) do
     %{id: user.id,
       username: user.username,
