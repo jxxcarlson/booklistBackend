@@ -20,7 +20,7 @@ defmodule BookList.UserSpace.Email do
     IO.puts "Email.email, sending to #{params["recipient"]}"
     new_email
     |> to(params["recipient"])
-    |> from("support@knode.io")
+    |> from("support@booklib.io")
     |> subject(params["subject"])
     |> html_body(params["body"])
     |> Mailer.deliver_now
@@ -31,7 +31,7 @@ defmodule BookList.UserSpace.Email do
     IO.puts "Email.email, sending to #{params["recipient"]}"
     new_email
     |> to(params["recipient"])
-    |> from("support@knode.io")
+    |> from("support@booklib.io")
     |> subject(params["subject"])
     |> text_body(params["body"])
     |> Mailer.deliver_now
@@ -44,14 +44,14 @@ defmodule BookList.UserSpace.Email do
     Dear #{user.username}
     </p>
 
-    <p>Thank you for joining knode.io. Please
+    <p>Thank you for joining booklib.io. Please
     <a href="#{Configuration.host}/api/verify/#{token}" >click on this link</a> to activate
     your account.</p>
 
     <br>
     Regards,
     <br>
-    The kNode Team
+    The booklib Team
 
     """
   end
@@ -70,7 +70,7 @@ defmodule BookList.UserSpace.Email do
     <br>
     Regards,
     <br>
-    The kNode Team
+    The booklib Team
 
     """
   end
