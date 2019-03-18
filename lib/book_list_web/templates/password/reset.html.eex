@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body style="margin: 60px;">
+
+<div style="padding: 20px; width: 300px; height: 400px; background-color: #eee">
+
+<h2>Reset password</h2>
+
+<form action="/api/password/reset">
+  New password:<br>
+  <input type="text" name="password" value="">
+  <br>
+  Password again:<br>
+  <input type="text" name="password2" value="">
+  <input type="hidden" name="token" value="<%= @token %>">
+  <br><br>
+  <input type="submit" value="Submit">
+
+</form>
+
+</div>
+
+
+</body>
+</html>

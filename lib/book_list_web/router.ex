@@ -1,6 +1,8 @@
 defmodule BookListWeb.Router do
   use BookListWeb, :router
 
+  alias BookListWeb.PasswordController
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -12,6 +14,11 @@ defmodule BookListWeb.Router do
   resources "/api/groups", BookListWeb.GroupController
   resources "/stats", BookListWeb.StatController, except: [:new, :edit]
   get "/api/stats/last", BookListWeb.StatController, :last
+
+  get "/api/password/request", PasswordController, :show_request_form
+  get "/api/password/mail_reset_link", PasswordController, :mail_reset_link
+  get "/api/password/form", PasswordController, :show_reset_form
+  get "/api/password/reset", PasswordController, :reset_password
 
   scope "/api", BookListWeb do
     pipe_through :api
