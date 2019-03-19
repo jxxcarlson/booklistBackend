@@ -9,7 +9,10 @@ defmodule BookListWeb.UserController do
   alias BookList.UserSpace.Email
   alias BookList.Repo
 
+
   action_fallback BookListWeb.FallbackController
+
+  plug :put_layout, false
 
   def authenticate(conn, %{"password" => password, "email" => email}) do
       IO.puts "AUTHENTICATE"
@@ -84,9 +87,11 @@ defmodule BookListWeb.UserController do
         cs = User.changeset(u, %{"verified": true})
         IO.inspect cs, label: "Changeset"
         Repo.update(cs)
-        render(conn, "success.json", message: "#{u.username}: verified")
+        render conn, "verified.html"
+        # render(conn, "success.json", message: "#{u.username}: verified")
       else
-        _ -> render(conn, "error.json", error: "User not verified")
+        _ -> render conn, "not_verified.html"
+        # _ -> render(conn, "error.json", error: "User not verified")
       end
   end
 
