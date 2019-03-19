@@ -2,6 +2,7 @@ defmodule BookListWeb.Router do
   use BookListWeb, :router
 
   alias BookListWeb.PasswordController
+  alias BookListWeb.MailController
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -20,7 +21,7 @@ defmodule BookListWeb.Router do
   get "/api/password/form", PasswordController, :show_reset_form
   get "/api/password/reset", PasswordController, :reset_password
 
-  post "/mail", MailController, :mail
+  post "/api/mail", MailController, :mail
 
   scope "/api", BookListWeb do
     pipe_through :api
