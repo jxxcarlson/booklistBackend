@@ -19,6 +19,7 @@ defmodule BookList.UserSpace.User do
     field :followers, {:array, :string}, default: []
     field :tags, {:array, :string}, default: []
     field :reading_stats, {:array, :map}
+    field :verified, :boolean, default: false
 
 
     timestamps()
@@ -47,7 +48,7 @@ defmodule BookList.UserSpace.User do
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:firstname, :lastname, :username, :public,
-      :blurb, :email, :password, :password_hash,  :follow, :followers, :tags, :reading_stats])
+      :blurb, :email, :password, :password_hash,  :follow, :followers, :tags, :reading_stats, :verified])
     |> validate_required([:firstname, :username, :email])
   end
 
