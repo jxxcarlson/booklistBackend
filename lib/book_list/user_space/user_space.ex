@@ -270,4 +270,12 @@ defmodule BookList.UserSpace do
     Repo.update(cs)
   end
 
+
+  def set_verified(id) do
+    user = Repo.get(User, id)
+    params = %{"verified": true}
+    cs = User.changeset(user, params)
+    Repo.update(cs)
+  end
+
 end
