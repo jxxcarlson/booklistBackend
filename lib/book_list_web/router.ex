@@ -22,6 +22,7 @@ defmodule BookListWeb.Router do
   get "/api/password/reset", PasswordController, :reset_password
 
   post "/api/mail", MailController, :mail
+  get "/api/verify/:token", BookListWeb.UserController, :verify
 
   scope "/api", BookListWeb do
     pipe_through :api

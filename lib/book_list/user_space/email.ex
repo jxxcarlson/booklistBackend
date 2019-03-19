@@ -10,13 +10,13 @@ defmodule BookList.UserSpace.Email do
 
   def email(params) do
     if params["type"] == "html_text" do
-      email_html(params)
+      html(params)
     else
-      email_plain(params)
+      plain(params)
     end
   end
 
-  def email_html(params) do
+  def html(params) do
     IO.puts "Email.email, sending to #{params["recipient"]}"
     new_email
     |> to(params["recipient"])
@@ -27,7 +27,7 @@ defmodule BookList.UserSpace.Email do
   end
 
 
-  def email_plain(params) do
+  def plain(params) do
     IO.puts "Email.email, sending to #{params["recipient"]}"
     new_email
     |> to(params["recipient"])

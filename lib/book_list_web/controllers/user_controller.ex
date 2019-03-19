@@ -6,6 +6,8 @@ defmodule BookListWeb.UserController do
   alias BookList.UserSpace.Query
   alias BookList.UserSpace.Authentication
   alias BookList.UserSpace.Token
+  alias BookList.UserSpace.Email
+  alias BookList.Repo
 
   action_fallback BookListWeb.FallbackController
 
@@ -46,7 +48,8 @@ defmodule BookListWeb.UserController do
     user_params |> IO.inspect(label: "user_params")
     with {:ok, username} <- Query.username_is_available(user_params["username"]),
          {:ok, email} <- Query.email_is_available(user_params["email"]),
-         {:ok, %User{} = user} <- UserSpace.create_user(user_params) do
+         {:ok, user} <- UserSpace.create_user(user_params) do
+              Email.html(%{"recipient" => user.email, "subject" => "Welcome!", "body" =>  Email.welcome_letter(user)})
               {:ok, token} = Token.get(user.id, user.username)
               conn
               |> put_status(:created)
@@ -68,6 +71,23 @@ defmodule BookListWeb.UserController do
     IO.puts "USER CONTROLLER SHOW, ID = #{id}"
     user = UserSpace.get_user!(id)
     render(conn, "sanitized_user.json", user: user)
+  end
+
+  def verify(conn, %{"token" => token}) do
+     IO.puts "TOKEN: #{token}"
+
+      with true <- Token.authenticated(token),
+         {:ok, p} <- Token.payload(token)
+      do
+        IO.puts "USER ID = #{p["user_id"]}"
+        u = Repo.get(User, p["user_id"])
+        cs = User.changeset(u, %{"verified": true})
+        IO.inspect cs, label: "Changeset"
+        Repo.update(cs)
+        render(conn, "success.json", message: "#{u.username}: verified")
+      else
+        _ -> render(conn, "error.json", error: "User not verified")
+      end
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

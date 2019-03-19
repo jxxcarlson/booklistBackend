@@ -4,7 +4,8 @@ defmodule BookList.UserSpace.Randomizer do
   """
 
   @doc """
-  Generate random string based on the given legth. It is also possible to generate certain type of randomise string using the options below:
+  Generate random string based on the given length. It is also possible
+  to generate certaintype of randomise string using the options below:
   * :all - generate alphanumeric random string
   * :alpha - generate nom-numeric random string
   * :numeric - generate numeric random string
