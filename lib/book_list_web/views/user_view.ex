@@ -32,8 +32,8 @@ defmodule BookListWeb.UserView do
       admin: user.admin || false,
       inserted_at: user.inserted_at,
       tags: user.tags || [],
-      reading_stats: user.reading_stats || []
-
+      reading_stats: user.reading_stats || [],
+      verified: user.verified || false
     }
   end
 
@@ -57,7 +57,8 @@ defmodule BookListWeb.UserView do
       admin: user.admin || false,
       inserted_at: user.inserted_at,
       tags: user.tags || [],
-      reading_stats: user.reading_stats || []
+      reading_stats: user.reading_stats || [],
+      verified: user.verified || false
     }
   end
 
@@ -74,7 +75,8 @@ defmodule BookListWeb.UserView do
       admin: user.admin || false,
       inserted_at: user.inserted_at,
       tags: user.tags || [],
-      reading_stats: user.reading_stats || []
+      reading_stats: user.reading_stats || [],
+      verified: user.verified || false
     }
   end
 
@@ -96,7 +98,8 @@ defmodule BookListWeb.UserView do
       inserted_at: user.inserted_at,
       tags: user.tags || [],
       numberOfBooks: user.number_of_books || 0,
-      reading_stats: user.reading_stats || []
+      reading_stats: user.reading_stats || [],
+      verified: user.verified || false
     }
   end
 
