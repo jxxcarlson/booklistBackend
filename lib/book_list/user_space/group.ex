@@ -3,8 +3,10 @@ defmodule BookList.UserSpace.Group do
 
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   alias BookList.UserSpace.Group
+  alias BookList.UserSpace.User
   alias BookList.Repo
 
   @doc"""
@@ -39,7 +41,14 @@ defmodule BookList.UserSpace.Group do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :chair, :cochair, :blurb, :members])
+    |> cast(params, [:name, :chair, :cochair, :blurb, :members ])
     |> validate_required([:name, :chair])
   end
+
+
+  def with_member(username) do
+    from g in Group,
+      where: fragment("? @> ?", g.members, ^[username])
+  end
+
 end

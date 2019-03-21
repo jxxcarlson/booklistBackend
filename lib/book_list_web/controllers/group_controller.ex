@@ -8,8 +8,13 @@ defmodule BookListWeb.GroupController do
 action_fallback BookListWeb.FallbackController
 
 
-  def index(conn, _params) do
-    groups = Repo.all(Group)
+  def index(conn, params) do
+    username = params["user"]
+    groups  = if username == nil do
+         Repo.all(Group)
+       else
+         Repo.all Group.with_member(username)
+       end
     render(conn, "index.json", groups: groups)
   end
 
