@@ -12,11 +12,11 @@ defmodule BookListWeb.GroupView do
 
   def render("group.json", %{group: group}) do
     %{id: group.id,
-      name: group.name,
-      chair: group.chair,
-      cochair: group.cochair,
-      blurb: group.blurb,
-      members: group.members
+      name: group.name || "",
+      chair: group.chair || "",
+      cochair: group.cochair || "",
+      blurb: group.blurb || "",
+      members: group.members || []
     }
   end
 
