@@ -24,6 +24,8 @@ defmodule BookListWeb.Router do
   post "/api/mail", MailController, :mail
   get "/api/verify/:token", BookListWeb.UserController, :verify
 
+  post "/api/groups/invite", BookListWeb.GroupController, :invite
+
   scope "/api", BookListWeb do
     pipe_through :api
   end

@@ -1,4 +1,5 @@
 defmodule BookListWeb.GroupView do
+
   use BookListWeb, :view
   alias BookListWeb.GroupView
 
@@ -18,6 +19,20 @@ defmodule BookListWeb.GroupView do
       blurb: group.blurb || "",
       members: group.members || []
     }
+  end
+
+
+  def render("invitation.json", %{invitation: invitation}) do
+    %{invitee: invitation["invitee"],
+      inviter: invitation["inviter"] || "",
+      group_name: invitation["group_name"] || "",
+      status: invitation["status"] || "",
+      group_id: invitation["group_id"] || -1
+    }
+  end
+
+  def render("error.json", %{error: str}) do
+    %{error: str}
   end
 
 

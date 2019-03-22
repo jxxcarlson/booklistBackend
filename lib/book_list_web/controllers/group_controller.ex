@@ -4,6 +4,7 @@ defmodule BookListWeb.GroupController do
   alias BookList.UserSpace
   alias BookList.UserSpace.Group
   alias BookList.Repo
+  alias BookList.UserSpace.Invitation
 
 action_fallback BookListWeb.FallbackController
 
@@ -62,4 +63,20 @@ action_fallback BookListWeb.FallbackController
 
     send_resp(conn, :no_content, "")
   end
+
+  def invite(conn,  invitation) do
+    IO.inspect invitation, label: "INVITATION"
+
+    cs = Invitation.changeset(%Invitation{}, invitation)
+    IO.inspect cs, label: "CS"
+    case cs.valid? do
+      true ->
+        Repo.insert(cs)
+        render(conn, "invitation.json", %{invitation: invitation})
+      false ->
+        render(conn, "error.json", %{error: "Could not make invitation"})
+      end
+    end
+    
+
 end
