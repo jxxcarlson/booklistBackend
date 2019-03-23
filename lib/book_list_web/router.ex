@@ -29,6 +29,9 @@ defmodule BookListWeb.Router do
   get "/api/invitations/:id", BookListWeb.InvitationController, :show
   get "/api/invitations", BookListWeb.InvitationController, :index
   post "/api/invite", BookListWeb.InvitationController, :invite
+  post "/api/acceptinvitation", BookListWeb.InvitationController, :accept
+  post "/api/rejectinvitation", BookListWeb.InvitationController, :reject
+
 
   scope "/api", BookListWeb do
     pipe_through :api

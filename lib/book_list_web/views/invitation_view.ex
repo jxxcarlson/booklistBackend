@@ -12,7 +12,8 @@ defmodule BookListWeb.InvitationView do
   end
 
   def render("invitation.json", %{invitation: invitation}) do
-    %{invitee: invitation.invitee,
+    %{id: invitation.id,
+     invitee: invitation.invitee,
       inviter: invitation.inviter || "",
       group_name: invitation.group_name || "",
       status: invitation.status || "",
@@ -22,6 +23,10 @@ defmodule BookListWeb.InvitationView do
 
   def render("error.json", %{error: str}) do
     %{error: str}
+  end
+
+  def render("reply.json", %{reply: str}) do
+    %{reply: str}
   end
 
 end

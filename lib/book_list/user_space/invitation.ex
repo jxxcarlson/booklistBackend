@@ -29,8 +29,17 @@ defmodule BookList.UserSpace.Invitation do
          where: i.group_id == ^id
   end
 
+  def by_invitee(query, invitee) do
+    from i in query,
+         where: i.invitee == ^invitee
+  end
+
   def get_by_id(id) do
     Invitation |> by_id(id) |> Repo.all
+  end
+
+  def get_by_invitee(invitee) do
+    Invitation |> by_invitee(invitee) |> Repo.all
   end
 
 end

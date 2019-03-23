@@ -26,16 +26,31 @@ defmodule BookListWeb.InvitationController do
     render(conn, "show.json", invitation: invitation)
   end
 
+  def accept(conn, params) do
+    IO.inspect params, label: "ACCEPT"
+    invitation = Repo.get!(Invitation, params["id"])
+    render(conn, "invitation.json", %{invitation: invitation})
+  end
+
+  def reject(conn, params) do
+    IO.inspect params, label: "REJECT"
+    IO.puts "ID = #{params["id"]}"
+    invitation = Repo.get!(Invitation, params["id"])
+    render(conn, "invitation.json", %{invitation: invitation})
+  end
 
   def index(conn, params) do
     group_id_ = params["group"]
-    IO.puts "group_id = #{group_id_}"
-    invitations  = if group_id_ == nil do
-        Repo.all(Invitation)
-      else
-        {group_id , _} = Integer.parse group_id_
-        Invitation.get_by_id(group_id)
-    end
+    invitee = params["invitee"]
+    invitations  =
+      cond do
+          not is_nil(group_id_) ->
+            {group_id , _} = Integer.parse group_id_
+            Invitation.get_by_id(group_id)
+          not is_nil(invitee) ->
+            Invitation.get_by_invitee(invitee)
+          true -> []
+      end
     render(conn, "index.json", invitations: invitations)
   end
 
