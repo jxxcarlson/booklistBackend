@@ -27,16 +27,6 @@ defmodule BookListWeb.InvitationController do
     render(conn, "show.json", invitation: invitation)
   end
 
-#  schema "invitations" do
-#    field :invitee, :string
-#    field :inviter, :string
-#    field :group_name, :string
-#    field :group_id, :integer
-#    field :status, :string
-#
-#    timestamps()
-#  end
-
   def accept(conn, params) do
     invitation = Repo.get!(Invitation, params["id"])
     cs_invitation = Invitation.changeset(invitation, %{status: "Accepted"})

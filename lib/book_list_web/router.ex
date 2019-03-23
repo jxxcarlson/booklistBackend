@@ -14,6 +14,7 @@ defmodule BookListWeb.Router do
   resources "/api/books", BookListWeb.BookController
 
   resources "/api/groups", BookListWeb.GroupController
+  resources "/api/posts", BookListWeb.PostController
 
   resources "/stats", BookListWeb.StatController, except: [:new, :edit]
   get "/api/stats/last", BookListWeb.StatController, :last
