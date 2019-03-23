@@ -12,7 +12,9 @@ defmodule BookListWeb.Router do
   post "/api/users/authenticate", BookListWeb.UserController, :authenticate
   get "/api/blurb/:username", BookListWeb.UserController, :blurb
   resources "/api/books", BookListWeb.BookController
+
   resources "/api/groups", BookListWeb.GroupController
+
   resources "/stats", BookListWeb.StatController, except: [:new, :edit]
   get "/api/stats/last", BookListWeb.StatController, :last
 
@@ -24,7 +26,9 @@ defmodule BookListWeb.Router do
   post "/api/mail", MailController, :mail
   get "/api/verify/:token", BookListWeb.UserController, :verify
 
-  post "/api/groups/invite", BookListWeb.GroupController, :invite
+  get "/api/invitations/:id", BookListWeb.InvitationController, :show
+  get "/api/invitations", BookListWeb.InvitationController, :index
+  post "/api/invite", BookListWeb.InvitationController, :invite
 
   scope "/api", BookListWeb do
     pipe_through :api

@@ -1,5 +1,4 @@
 defmodule BookList.UserSpace.Group do
-  # use BookListWeb, :model
 
   use Ecto.Schema
   import Ecto.Changeset
