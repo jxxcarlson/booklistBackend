@@ -64,28 +64,5 @@ action_fallback BookListWeb.FallbackController
     send_resp(conn, :no_content, "")
   end
 
-#  def invite(conn,  invitation) do
-#    cs = Invitation.changeset(%Invitation{}, invitation)
-#    case cs.valid? do
-#      true ->
-#        Repo.insert(cs)
-#        render(conn, "invitation.json", %{invitation: invitation})
-#      false ->
-#        render(conn, "error.json", %{error: "Could not make invitation"})
-#      end
-#  end
-#
-#  def show_invitation(conn, %{"invitation" => invitation}) do
-#    render(conn, "invitation.json", invitation: invitation)
-#  end
-#
-#
-#  def invitations(conn, params) do
-#    IO.puts "INVITATIONS YAY"
-#    IO.inspect params, label: "INVITATIONS"
-#    invitations  = Repo.all(Invitation)
-#    IO.inspect invitations, label: "INVITATIONS (*)"
-#    render(conn, "invitations.json", invitations: invitations)
-#  end
 
 end

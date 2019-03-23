@@ -4,6 +4,7 @@ defmodule BookListWeb.InvitationController do
   alias BookList.UserSpace
   alias BookList.Repo
   alias BookList.UserSpace.Invitation
+  alias BookList.UserSpace.Group
 
   action_fallback BookListWeb.FallbackController
 
@@ -26,17 +27,42 @@ defmodule BookListWeb.InvitationController do
     render(conn, "show.json", invitation: invitation)
   end
 
+#  schema "invitations" do
+#    field :invitee, :string
+#    field :inviter, :string
+#    field :group_name, :string
+#    field :group_id, :integer
+#    field :status, :string
+#
+#    timestamps()
+#  end
+
   def accept(conn, params) do
-    IO.inspect params, label: "ACCEPT"
     invitation = Repo.get!(Invitation, params["id"])
-    render(conn, "invitation.json", %{invitation: invitation})
+    cs_invitation = Invitation.changeset(invitation, %{status: "Accepted"})
+    user = UserSpace.Query.get_by_username invitation.invitee
+    group = Repo.get(Group, invitation.group_id)
+    cs_group = Group.changeset(group, %{members: group.members ++ [invitation.invitee]})
+    if cs_invitation.valid? && cs_group.valid? do
+      Repo.update(cs_invitation)
+      Repo.update(cs_group)
+      render(conn, "invitation.json", %{invitation: invitation})
+    else
+      render("error.json", %{error: "Could not not accept invitation"})
+    end
   end
 
   def reject(conn, params) do
-    IO.inspect params, label: "REJECT"
-    IO.puts "ID = #{params["id"]}"
     invitation = Repo.get!(Invitation, params["id"])
-    render(conn, "invitation.json", %{invitation: invitation})
+    cs_invitation = Invitation.changeset(invitation, %{status: "Rejected"})
+    user = UserSpace.Query.get_by_username invitation.invitee
+
+    if cs_invitation.valid? do
+      Repo.update(cs_invitation)
+      render(conn, "invitation.json", %{invitation: invitation})
+    else
+      render("error.json", %{error: "Could not reject invitation"})
+    end
   end
 
   def index(conn, params) do
