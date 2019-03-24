@@ -12,12 +12,14 @@ defmodule BookListWeb.PostView do
   end
 
   def render("post.json", %{post: post}) do
+    {:ok, datetime} = DateTime.from_naive(post.inserted_at, "Etc/UTC")
     %{id: post.id,
       title: post.title || "",
       content: post.content || "",
       author_name: post.author_name || "",
       group_id: post.group_id || -1,
-      tags: post.tags || []
+      tags: post.tags || [],
+      creation_date: "#{datetime.day}-#{datetime.month}-#{datetime.year}"
     }
   end
 
