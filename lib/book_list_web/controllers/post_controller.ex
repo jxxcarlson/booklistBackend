@@ -25,6 +25,20 @@ defmodule BookListWeb.PostController do
         |> render(BookList.ChangesetView, "error.json", changeset: changeset)
     end
   end
+
+  def update(conn, post_params) do
+    post = Repo.get!(Post, post_params["id"])
+    changeset = Post.changeset(post, post_params)
+
+    case Repo.update(changeset) do
+      {:ok, post} ->
+        render(conn, "show.json", post: post)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(BookList.ChangesetView, "error.json", changeset: changeset)
+    end
+  end
   
   def show(conn, %{"id" => id}) do
     post = Repo.get!(Post, id)
