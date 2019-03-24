@@ -19,7 +19,7 @@ defmodule BookListWeb.PostView do
       author_name: post.author_name || "",
       group_id: post.group_id || -1,
       tags: post.tags || [],
-      creation_date: "#{datetime.day}-#{datetime.month}-#{datetime.year}"
+      creation_date: "#{datetime.month}-#{datetime.day}-#{datetime.year}"
     }
   end
 
