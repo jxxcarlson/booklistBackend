@@ -139,8 +139,6 @@ defmodule BookList.UserSpace.Token do
     # jc, {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0OTYxNzgxNDksInVzZXJfaWQiOjIsInVzZXJuYW1lIjoianh4Y2FybHNvbiJ9.KUfL8dk2_Xz2ltaPqXyfoLb7ZfZ1n4_JCpJFDZgu2Zc"}
 
     def authenticated_from_header(conn) do
-      IO.puts "AUTH CONN"
-      token_from_header(conn) |> IO.inspect(label: "TOKEN") 
       with {:ok, token} <- token_from_header(conn)
       do
          {:ok,  authenticated(token)}
