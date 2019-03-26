@@ -46,7 +46,8 @@ defmodule BookList.Mixfile do
       {:bamboo, "~> 0.8"},
       {:secure_random, "~> 0.5"},
       {:poison, "~> 3.1"},
-    ]
+      {:quantum, "~> 2.3"}
+      ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

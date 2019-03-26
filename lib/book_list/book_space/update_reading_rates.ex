@@ -27,8 +27,8 @@ defmodule BookList.BookSpace.UpdateReadingRates do
   def handle_info(:timeout, state) do
     IO.puts "Updating stats"
 
-#    Stat.delete_for_today
-#    Stat.create
+#
+
     # after executing the code, we schedule another execution,
     # so it works like a loop
     {:noreply, state, @timeout}
