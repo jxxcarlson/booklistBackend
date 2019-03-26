@@ -16,6 +16,9 @@ defmodule BookList.BookSpace.Book do
     field :user_id, :id
     field :start_date_string, :string, default: ""
     field :finish_date_string, :string, default: ""
+    field :pages_read_today, :integer, default: 0
+    field :average_reading_rate, :float, default: 0
+
 
     # belongs_to :user, BookList.UserSpace.User
     timestamps()
@@ -25,7 +28,7 @@ defmodule BookList.BookSpace.Book do
   def changeset(book, attrs) do
     book
     |> cast(attrs, [:user_id, :title, :subtitle, :author, :notes, :pages, :pages_read, 
-       :rating, :public, :category, :start_date_string, :finish_date_string])
+       :rating, :public, :category, :start_date_string, :finish_date_string, :pages_read_today, :average_reading_rate])
     |> validate_required([:title, :author, :pages, :pages_read, :rating, :public])
   end
 end

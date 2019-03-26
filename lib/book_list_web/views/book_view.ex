@@ -1,4 +1,4 @@
-defmodule BookListWeb.BookView do
+  defmodule BookListWeb.BookView do
   use BookListWeb, :view
   alias BookListWeb.BookView
 
@@ -24,7 +24,9 @@ defmodule BookListWeb.BookView do
       public: book.public,
       category: book.category || "",
       startDateString: book.start_date_string,
-      finishDateString: book.finish_date_string
+      finishDateString: book.finish_date_string,
+      pagesReadToday: book.pages_read_today || 0,
+      averageReadingRate: book.average_reading_rate || 0
     }
   end
 

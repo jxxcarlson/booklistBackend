@@ -12,7 +12,6 @@ defmodule BookListWeb.BookController do
   action_fallback BookListWeb.FallbackController
 
   def index(conn, params) do
-     IO.inspect params
      books = cond do
         (params["userid"] || "") != "" -> Query.get_by_user_id params["userid"]
         (params["shared"] || "") != "" -> get_shared_books(params["shared"])
