@@ -1,16 +1,17 @@
-defmodule BookList.BookSpace.UpdateStats do
+defmodule BookList.BookSpace.UpdateReadingRates do
+
   @moduledoc false
 
   use GenServer
 
-  alias BookList.BookSpace.Stat
+  alias BookList.BookSpace.Book
 
   # @timeout 3600000 # one hour
 
   @timeout 600_000 # ten minutes
 
   def start_link() do
-     GenServer.start_link(__MODULE__, [])
+    GenServer.start_link(__MODULE__, [])
   end
 
   def init(state) do
@@ -26,8 +27,8 @@ defmodule BookList.BookSpace.UpdateStats do
   def handle_info(:timeout, state) do
     IO.puts "Updating stats"
 
-    Stat.delete_for_today
-    Stat.create
+#    Stat.delete_for_today
+#    Stat.create
     # after executing the code, we schedule another execution,
     # so it works like a loop
     {:noreply, state, @timeout}

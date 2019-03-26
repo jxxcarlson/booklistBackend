@@ -102,4 +102,21 @@ defmodule BookList.BookSpace do
   def change_book(%Book{} = book) do
     Book.changeset(book, %{})
   end
+
+  def update_average_reading_rate(book, p) do
+    rr = if round( book.average_reading_rate) == 0  do
+            book.pages_read_today
+         else
+           p*book.average_reading_rate + (1-p)*book.pages_read_today
+         end
+    IO.puts "rr = #{rr}"
+    cs = Book.changeset(book, %{average_reading_rate: rr})
+    Repo.update(cs)
+  end
+
+  def update_average_reading_rates(p) do
+    books = Repo.all Book
+    Enum.map books, (fn (book) -> book.update_average_reading_rate(book, p) end)
+
+  end
 end
