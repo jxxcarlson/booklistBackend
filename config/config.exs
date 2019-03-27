@@ -30,6 +30,7 @@ config :book_list, BookList.Mailer,
 
 
 config :book_list, BookList.BookSpace.Scheduler,
+       timezone: "America/New_York",
        jobs: [
          # Every minute
          # {"* * * * *",      {Heartbeat, :send, []}},
@@ -38,7 +39,7 @@ config :book_list, BookList.BookSpace.Scheduler,
          # Runs on 18, 20, 22, 0, 2, 4, 6:
          # {"0 18-6/2 * * *", fn -> :mnesia.backup('/var/backup/mnesia') end},
          # Runs every midnight:
-         {"@daily",         {BookList.BookSpace, :update_average_reading_rates, []}}
+         {"@midnight", {BookList.BookSpace, :update_average_reading_rates, []}}
        ]
 
 # Import environment specific config. This must remain at the bottom
