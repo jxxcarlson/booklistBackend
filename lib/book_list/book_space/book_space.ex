@@ -115,6 +115,7 @@ defmodule BookList.BookSpace do
   end
 
   def update_average_reading_rates do
+    IO.puts "UPDATE AVERAGE READING RATES"
     books = Repo.all Book
     Enum.map books, (fn (book) -> book.update_average_reading_rate(book, 0.5) end)
 
