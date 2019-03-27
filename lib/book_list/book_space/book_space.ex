@@ -110,7 +110,7 @@ defmodule BookList.BookSpace do
            p*book.average_reading_rate + (1-p)*book.pages_read_today
          end
     IO.puts "rr = #{rr}"
-    cs = Book.changeset(book, %{average_reading_rate: rr})
+    cs = Book.changeset(book, %{average_reading_rate: rr, pages_read_today: 0})
     Repo.update(cs)
   end
 
