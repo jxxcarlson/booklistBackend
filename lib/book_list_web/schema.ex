@@ -3,7 +3,8 @@ defmodule BookListWeb.Schema do
 
   import_types Absinthe.Type.Custom
 
-  alias BookListWeb.Resolvers.BookResolver  # BookListWeb.BookResolver 
+  alias BookListWeb.Resolvers.BookResolver
+  alias BookListWeb.Resolvers.UserResolver
 
   object :book do
     field :id, non_null(:id)
@@ -24,10 +25,44 @@ defmodule BookListWeb.Schema do
     field :inserted_at, :naive_datetime
   end
 
+  object :user do
+    field :id, non_null(:id)
+    field :email, :string
+    field :username, :string
+    field :firstname, :string
+    field :lastname, :string
+    field :password_hash
+    field :password, :string
+    field :admin, :boolean
+    field :blurb, :string
+    field :public, :boolean
+    field :follow, (list_of(:string))
+    field :followers,list_of(:string)
+    field :tags, list_of(:string)
+    field :reading_stats, list_of(:stat)
+    field :verified, :boolean
+    field :inserted_at, :naive_datetime
+  end
+
+  object :stat do
+    field :date, :string
+    field :pages_read, :integer
+  end
+
 @docp """
 http://localhost:4000/graphiql
 
-{
+
+  { getUser(id: 1) {
+      username
+      email
+      id
+      follow
+      readingStats
+      insertedAt
+    }
+  }
+
   listBooks {
     title
     id
@@ -64,6 +99,14 @@ http://localhost:4000/graphiql
       resolve &BookResolver.list_books/3
     end
 
+    field :get_user, non_null(list_of(non_null(:user))) do
+      arg :id, non_null(:integer)
+      resolve &UserResolver.get_user/3
+    end
+
+    field :list_users, non_null(list_of(non_null(:user))) do
+      resolve &UserResolver.list_users/3
+    end
   end
 
 

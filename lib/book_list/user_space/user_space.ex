@@ -19,7 +19,7 @@ defmodule BookList.UserSpace do
       [%User{}, ...]
 
   """
-  def list_users do
+  def x  do
     User |> Query.sort_by_username |> Repo.all
   end
 
