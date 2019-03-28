@@ -47,7 +47,10 @@ defmodule BookList.Mixfile do
       {:secure_random, "~> 0.5"},
       {:poison, "~> 3.1"},
       {:quantum, "~> 2.3"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+      {:plug_cowboy, "~> 1.0"},
+      {:absinthe_ecto, "~> 0.1.0"},
+      {:absinthe_plug, "~> 1.3.0"},
       ]
   end
 
