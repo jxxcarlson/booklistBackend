@@ -39,11 +39,6 @@ defmodule BookListWeb.Router do
   end
 
 
-
-#  pipeline :gql do
-#    plug :accepts, ["json"]
-#  end
-
   scope "/" do
     pipe_through :api
 
@@ -53,14 +48,5 @@ defmodule BookListWeb.Router do
             context: %{pubsub: BookListWeb.Endpoint}
   end
 
-
-#  scope "/" do
-#    pipe_through :api
-#
-#    forward "/graphiql", Absinthe.Plug.GraphiQL,
-#            schema: CommunityWeb.Schema,
-#            interface: :simple,
-#            context: %{pubsub: CommunityWeb.Endpoint}
-#  end
 
 end
