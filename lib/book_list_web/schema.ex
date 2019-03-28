@@ -5,6 +5,7 @@ defmodule BookListWeb.Schema do
 
   alias BookListWeb.Resolvers.BookResolver
   alias BookListWeb.Resolvers.UserResolver
+  alias BookListWeb.Resolvers.GroupResolver
 
   object :book do
     field :id, non_null(:id)
@@ -49,6 +50,16 @@ defmodule BookListWeb.Schema do
     field :pages_read, :integer
   end
 
+  object :group do
+    field :name, :string
+    field :chair, :string
+    field :cochair, :string
+    field :blurb, :string
+    field :members, list_of(:string)
+
+    timestamps()
+  end
+
 @docp """
 http://localhost:4000/graphiql
 
@@ -86,6 +97,39 @@ http://localhost:4000/graphiql
   }
 }
 
+{
+
+  {
+    listGroups {
+    name
+
+  }
+}
+
+
+{ getUser(id: 30) {
+      username
+      email
+      id
+      follow
+      readingStats {
+        date
+        pagesRead
+      }
+      insertedAt
+    }
+  listBooks(userId: 30) {
+    title
+    id
+    pages
+    pagesRead
+    pagesReadToday
+    userId
+    insertedAt
+  }
+  }
+    
+
 """
 
   query do
@@ -106,6 +150,10 @@ http://localhost:4000/graphiql
 
     field :list_users, non_null(list_of(non_null(:user))) do
       resolve &UserResolver.list_users/3
+    end
+
+    field :list_groups, non_null(list_of(non_null(:group))) do
+      resolve &GroupResolver.list_groups/3
     end
   end
 
